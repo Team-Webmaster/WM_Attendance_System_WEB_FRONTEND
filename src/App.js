@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import axios from 'axios';
 
-const apiUrl = 'https://localhost:5001'
+const apiUrl = 'https://localhost:5000'
 
 axios.interceptors.request.use((config)=>{
   const { origin } = new URL(config.url);
