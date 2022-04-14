@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Register from '../components/Register';
-import { Box, Grid, Paper } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const RegisterPage = () => {
 

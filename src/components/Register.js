@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Button, Container, Divider, Grid, Typography, Autocomplete, InputAdornment, IconButton, Avatar } from '@mui/material';
+import { Box, Button, Divider, Grid, Typography, Autocomplete, InputAdornment, IconButton, Avatar } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
@@ -50,7 +50,7 @@ const Register = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if(passwordRef.current.value!=confirmPasswordRef.current.value){
+    if(passwordRef.current.value!==confirmPasswordRef.current.value){
       setIsPasswordCorrect(false);
       return;
     }
@@ -69,6 +69,8 @@ const Register = (props) => {
     formData.append('type', 0);
     formData.append('noOfAnnualLeaves', 20);
     formData.append('status', "Pending");
+    formData.append('confirm',0);
+    console.log(Array.from(formData));
     props.registrationFormHandler(formData);
   }
 
@@ -91,11 +93,11 @@ const Register = (props) => {
         sx={
           {
             padding: 3,
-            borderRadius: "5%",
-            boxShadow: 3
+            boxShadow: 5,
+            ml:"10%"
           }
         }
-        maxWidth="sm"
+        maxWidth="500px"
       >
         <PersonAddAltIcon color="primary" sx={{ fontSize: 60 }} />
         <Typography
@@ -316,7 +318,7 @@ const Register = (props) => {
             <Avatar 
               alt="Picture"
               src={proPicSrc}
-              sx={{width:150,height:150,m:4}}
+              sx={{width:"80%",height:"60%",m:"10%"}}
             />
           </Grid>
           <Grid

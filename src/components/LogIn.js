@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { Box, Typography, Grid, TextField, Button, InputAdornment, IconButton, Alert } from '@mui/material';
+import { Box, Typography, Grid, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LoginIcon from '@mui/icons-material/Login';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -22,6 +22,7 @@ const LogIn = (props) => {
     }
     props.submitLoginHandler(loginData);
   }
+
   return (
       <Box
         component="form"
@@ -31,16 +32,16 @@ const LogIn = (props) => {
           {
             margin:"15%",
             padding: 3,
-            borderRadius: "5%",
-            boxShadow: 3
+            boxShadow: 10
           }
         }
-        maxWidth="sm"
+        maxWidth="450px"
       >
-        {props.errState?<Alert severity='error'>{props.errMsg}</Alert>:null}
         <Grid
           container
-          spacing={2}
+          spacing={3}
+          mb={2}
+          mt={1}
         >
           <Grid
             item
@@ -58,10 +59,12 @@ const LogIn = (props) => {
             xs={12}
           >
             <TextField
+              error={props.errState&&props.errMsg==="Email not found"}
               id="outlined-email"
               label="Email"
               type="email"
               size="small"
+              helperText={props.errState&&props.errMsg==="Email not found"?"*"+props.errMsg:null}
               fullWidth
               inputRef={emailRef}
             />
@@ -71,10 +74,12 @@ const LogIn = (props) => {
             xs={12}
           >
             <TextField
+              error={props.errState&&props.errMsg==="Password Incorrect"}
               id="outlined-password"
               label="Password"
               type={showPassword?"text":"password"}
               size="small"
+              helperText={props.errState&&props.errMsg==="Password Incorrect"?"*"+props.errMsg:null}
               fullWidth
               inputRef={passwordRef}
               InputProps={
