@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import LogIn from '../components/LogIn';
 import axios from 'axios';
-import { Alert, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 
 const LoginPage = ()=>{
   const [ errState, setErrState ] = useState(false);
@@ -25,6 +25,12 @@ const LoginPage = ()=>{
       .catch((err)=>{
         console.log(err);
       })
+  }
+  const handleClose = (event,reason)=>{
+    if(reason==="clickaway"){
+      return;
+    }
+    setErrState(false);
   }
   return (
     <Grid container component="main" sx={{height:"100vh",p:5}}>
@@ -50,7 +56,7 @@ const LoginPage = ()=>{
                 md={5}
                 lg={6}            
               >
-                <LogIn  submitLoginHandler={loginHandler} errState={errState} errMsg={errMsg} />
+                <LogIn  submitLoginHandler={loginHandler} errState={errState} errMsg={errMsg} handleClose={handleClose} />
             </Grid>
         </Grid>
   );
