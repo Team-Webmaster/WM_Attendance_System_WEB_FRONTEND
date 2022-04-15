@@ -13,14 +13,15 @@ import SendIcon from '@mui/icons-material/Send';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
+const employeeMenuItems = ['Home', 'Leave Management', 'Report', 'Profile', 'Calendar', 'Statistics', 'Video Conference'];
+const managerMenuItems = ['Working Status Board', 'Send Notification'];
+const adminMenuItems = ['Settings'];
+const paths = ['/home','/leave-management','/report','/profile','/calendar','/statistics','/video-conference','/working-status-board','/send-notification','/settings'];
+
 const SideMenu = (props) => {
 
     const location = useLocation();
-    const employeeMenuItems = ['Home', 'Leave Management', 'Report', 'Profile', 'Calendar', 'Statistics', 'Video Conference'];
-    const managerMenuItems = ['Working Status Board', 'Send Notification'];
-    const adminMenuItems = ['Settings'];
     const menuItems = [...employeeMenuItems, ...managerMenuItems, ...adminMenuItems];
-    const paths = ['/home','/leave-management','/report','/profile','/calendar','/statistics','/video-conference','/working-status-board','/send-notification','/settings'];
 
     return (
         <Box

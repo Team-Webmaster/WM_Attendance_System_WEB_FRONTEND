@@ -38,7 +38,7 @@ const HomePage = () => {
           <Grid sx={{ mt: "8%", ml: "10%" }}>
             <Typography sx={{ fontSize: "40px", fontWeight: "bold" }} >{timeGreeting(date)} Lakshitha !</Typography>
             <Typography sx={{ fontSize: "40px", fontWeight: "bold" }} >Welcome Back Chief...</Typography>
-            <Clock format={'HH:mm:ss'} ticking={true} timezone={'Asia/Pacific'} style={{ fontSize: "60px", fontWeight: "bold" }} />
+            <Clock format={'h:mm:ss A'} ticking={true} timezone={'Asia/Colombo'} style={{ fontSize: "60px", fontWeight: "bold" }} />
             <Typography sx={{ fontSize: "60px", fontWeight: "bold" }} >{arr[0].toUpperCase()}</Typography>
             <Typography sx={{ fontSize: "60px", fontWeight: "bold" }} >{date.getMonth() + 1}/{arr[2]}/{arr[3]}</Typography>
           </Grid>

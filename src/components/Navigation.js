@@ -15,25 +15,22 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Drawer } from '@mui/material';
 import SideMenu from './SideMenu';
+import { Link as RouterLink } from 'react-router-dom';
 
 const pages = ['Home', 'About Us'];
+const paths = ['/home','/about-us'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Navigation = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [isMenu, setIsMenu] = React.useState(false);
 
     const handleOpenNavMenu = (event) => {
         setIsMenu(!isMenu);
-        setAnchorElNav(event.currentTarget);
     };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
@@ -57,7 +54,7 @@ const Navigation = () => {
             >
                 <SideMenu toggleDrawer={toggleDrawer} />
             </Drawer>
-            <AppBar position="static" color="transparent" sx={{}} >
+            <AppBar position="fixed" color="transparent" sx={{backgroundColor:"rgba(255,255,255,0.9)"}} >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <IconButton
@@ -87,11 +84,12 @@ const Navigation = () => {
                             WM Attendance System
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: "flex-end" } }}>
-                            {pages.map((page) => (
+                            {pages.map((page,index) => (
                                 <Button
                                     key={page}
-                                    onClick={handleCloseNavMenu}
                                     sx={{ my: 1, color: 'black', display: 'block', fontWeight: "bold", mx: 1 }}
+                                    component={RouterLink}
+                                    to={paths[index]}
                                 >
                                     {page}
                                 </Button>

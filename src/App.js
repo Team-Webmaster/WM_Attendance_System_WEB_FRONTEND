@@ -44,7 +44,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Routes>
-          <Route path='/' element={<LoginPage />} />
+          <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/home' element={<HomePage />} />
           <Route path='/leave-management' element={<LeaveManagementPage/>} />

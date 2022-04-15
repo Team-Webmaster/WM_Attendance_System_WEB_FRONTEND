@@ -332,7 +332,7 @@ const Register = (props) => {
             item
             xs={12}
           >
-            <Typography>Already have a account ?  <Button component={RouterLink} to='/'>Login</Button></Typography>
+            <Typography>Already have a account ?  <Button component={RouterLink} to='/login'>Login</Button></Typography>
           </Grid>
         </Grid>
       </Box>
