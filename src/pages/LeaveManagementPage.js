@@ -7,7 +7,7 @@ const LeaveManagementPage = () => {
   return (
     <React.Fragment>
         <Navigation/>
-        <Grid container component="main" sx={{ height: "90vh", p: 5 }}>
+        <Grid container component="main" sx={{ height: "90vh", p: 5 , mt:5}}>
         <Grid
           item
           xs={false}

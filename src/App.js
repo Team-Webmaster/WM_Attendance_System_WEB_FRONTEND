@@ -15,6 +15,8 @@ import WorkingStatusBoardPage from './pages/WorkingStatusBoardPage';
 import SendNotificationPage from './pages/SendNotificationPage';
 import SettingsPage from './pages/SettingsPage';
 import ContactUsPage from './pages/ContactUsPage';
+import LandingPage from './pages/LandingPage';
+import AboutUsPage from './pages/AboutUsPage';
 
 const theme = createTheme({
   typography: {
@@ -44,6 +46,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className="App">
         <Routes>
+          <Route path='/' element={<LandingPage/>} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/home' element={<HomePage />} />
@@ -57,6 +60,7 @@ function App() {
           <Route path='/send-notification' element={<SendNotificationPage/>} />
           <Route path='/settings' element={<SettingsPage/>} />
           <Route path='/contact-us' element={<ContactUsPage/>} />
+          <Route path='/about-us' element={<AboutUsPage/>} />
         </Routes>
       </div>
     </ThemeProvider>

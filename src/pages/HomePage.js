@@ -11,7 +11,7 @@ const HomePage = () => {
   return (
     <div>
       <Navigation/>
-      <Grid container component="main" sx={{ height: "90vh", p: 5 }}>
+      <Grid container component="main" sx={{ height: "90vh", p: 5,mt:8 }}>
         <Grid
           item
           xs={false}

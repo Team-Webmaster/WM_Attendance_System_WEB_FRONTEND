@@ -24,7 +24,7 @@ const SimpleFooter = () => {
                     </Grid>
                 </Grid>
                 <Grid item md={3}>
-                    <Typography sx={{my:2.5,fontWeight:"bold"}} >QUICK ACCESS</Typography>
+                    <Typography sx={{my:2.5,fontWeight:"bold"}} >FEATURES</Typography>
                     <ButtonGroup orientation='vertical' variant='text' >
                     {
                         features.map((feature,index)=>{
