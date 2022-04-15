@@ -3,6 +3,7 @@ import { Grid, Typography } from '@mui/material';
 import Clock from 'react-live-clock';
 import timeGreeting from 'greeting-time';
 import Navigation from '../components/Navigation';
+import Footer from '../components/Footer';
 
 const HomePage = () => {
   const date = new Date();
@@ -43,6 +44,7 @@ const HomePage = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Footer/>
     </div>
   )
 }

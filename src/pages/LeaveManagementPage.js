@@ -1,6 +1,7 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
 import { Grid } from '@mui/material';
+import Footer from '../components/Footer';
 
 const LeaveManagementPage = () => {
   return (
@@ -32,6 +33,7 @@ const LeaveManagementPage = () => {
         >
         </Grid>
       </Grid>
+      <Footer/>
     </React.Fragment>
   )
 }
