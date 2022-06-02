@@ -1,7 +1,8 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import Calendar from '../components/Calendar';
 
 const CalendarPage = () => {
   return (
@@ -29,7 +30,21 @@ const CalendarPage = () => {
           sm={8}
           md={5}
           lg={6}
+          sx={{ textAlign: "left" }}
         >
+          <Typography variant='h4' sx={{fontWeight:"bold"}} >Calendar</Typography>
+          <Typography>The place to view all your events...</Typography>
+        </Grid>
+      </Grid>
+      <Grid container sx={{ p: 5, mt:5 }}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          lg={12}
+        >
+          <Calendar/>
         </Grid>
       </Grid>
       <Footer/>

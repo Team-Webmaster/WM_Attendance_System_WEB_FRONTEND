@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 
 const ProfilePage = () => {
@@ -29,7 +29,10 @@ const ProfilePage = () => {
           sm={8}
           md={5}
           lg={6}
+          sx={{ textAlign: "left" }}
         >
+          <Typography variant='h4' sx={{fontWeight:"bold"}} >Profile</Typography>
+          <Typography>The place to manage all of your details...</Typography>
         </Grid>
       </Grid>
       <Footer/>

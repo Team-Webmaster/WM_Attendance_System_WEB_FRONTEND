@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const WorkingStatusBoardPage = () => {
   return (
@@ -29,7 +29,10 @@ const WorkingStatusBoardPage = () => {
           sm={8}
           md={5}
           lg={6}
+          sx={{ textAlign: "left" }}
         >
+          <Typography variant='h4' sx={{fontWeight:"bold"}} >Working Status Board</Typography>
+          <Typography>The place to check working statuses...</Typography>
         </Grid>
       </Grid>
       <Footer/>

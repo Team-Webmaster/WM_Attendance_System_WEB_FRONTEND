@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const VideoConferencePage = () => {
   return (
@@ -29,7 +29,10 @@ const VideoConferencePage = () => {
           sm={8}
           md={5}
           lg={6}
+          sx={{ textAlign: "left" }}
         >
+          <Typography variant='h4' sx={{fontWeight:"bold"}} >Video Conference</Typography>
+          <Typography>The place to manage video conferences...</Typography>
         </Grid>
       </Grid>
       <Footer/>

@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 import LogIn from '../components/LogIn';
 import axios from 'axios';
 import { Grid } from '@mui/material';
 import SimpleFooter from '../components/SimpleFooter';
 import SimpleNavigation from '../components/SimpleNavigation';
+import { UserContext } from '../store/Context';
 
 const LoginPage = () => {
   const [errState, setErrState] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+  const { setUserData } = useContext(UserContext);
 
   const loginHandler = (loginData) => {
     axios.post('https://localhost:5001/api/User/login', loginData)
       .then((response) => {
-        console.log(response.data);
         if (response.data.state) {
+          setUserData(response.data.data);
           navigate('/home');
         }
         else {

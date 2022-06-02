@@ -1,7 +1,7 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const SettingsPage = () => {
   return (
@@ -29,7 +29,10 @@ const SettingsPage = () => {
           sm={8}
           md={5}
           lg={6}
+          sx={{ textAlign: "left" }}
         >
+          <Typography variant='h4' sx={{fontWeight:"bold"}} >Settings</Typography>
+          <Typography>The place edit settings...</Typography>
         </Grid>
       </Grid>
       <Footer/>

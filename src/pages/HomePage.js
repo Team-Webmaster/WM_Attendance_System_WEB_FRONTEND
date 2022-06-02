@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Grid, Typography } from '@mui/material';
 import Clock from 'react-live-clock';
 import timeGreeting from 'greeting-time';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
+import { UserContext } from '../store/Context';
 
 const HomePage = () => {
+  const { userData } = useContext(UserContext);
+  console.log(userData);
   const date = new Date();
   const arr = date.toDateString().split(' ');
   return (

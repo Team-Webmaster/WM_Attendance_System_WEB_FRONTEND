@@ -17,6 +17,8 @@ import SettingsPage from './pages/SettingsPage';
 import ContactUsPage from './pages/ContactUsPage';
 import LandingPage from './pages/LandingPage';
 import AboutUsPage from './pages/AboutUsPage';
+import { useContext, useEffect } from 'react';
+import { UserContext } from './store/Context';
 
 const theme = createTheme({
   typography: {
@@ -42,6 +44,10 @@ axios.interceptors.request.use((config) => {
 );
 
 function App() {
+  const { setUserData } = useContext(UserContext);
+  useEffect(()=>{
+    setUserData({name:"Hi"});
+  },[])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
