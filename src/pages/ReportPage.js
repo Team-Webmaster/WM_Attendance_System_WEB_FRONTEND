@@ -1,9 +1,26 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
+import TabPanel from '../components/TabPanel';
+import EmployeeReportForm from '../components/EmployeeReportForm';
+import SelfReportForm from '../components/SelfReportForm';
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const ReportPage = () => {
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <React.Fragment>
        <Navigation/>
@@ -35,6 +52,20 @@ const ReportPage = () => {
           <Typography>The place to make your reports...</Typography>
         </Grid>
       </Grid>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Self Reports" sx={{ml:30}} {...a11yProps(0)} />
+            <Tab label="Employee Reports" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <SelfReportForm/>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <EmployeeReportForm/>
+        </TabPanel>
+      </Box>
       <Footer/>
     </React.Fragment>
   )

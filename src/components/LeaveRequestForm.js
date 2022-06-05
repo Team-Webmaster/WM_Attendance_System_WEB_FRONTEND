@@ -1,6 +1,7 @@
 import React from 'react';
 import { Box, Grid, Button, Typography, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
-import moment from 'moment';
+import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
+import { dayDifference, hourDifference, minuteDifference } from '../functions/timeDifference';
 
 const leaveTypes = [{ id: 1, type: 'Sick Leave' }, { id: 2, type: 'Normal Leave' }, { id: 3, type: 'Day off' }];
 const durations = ['Few Hours', 'First Half', 'Second Half', 'Full Day', 'Multi Days'];
@@ -12,6 +13,13 @@ const LeaveRequestForm = (props) => {
     const [endDate, setEndDate] = React.useState('');
     const [startTime, setStartTime] = React.useState('');
     const [endTime, setEndTime] = React.useState('');
+
+    React.useEffect(()=>{
+        setStartDate('');
+        setEndDate('');
+        setStartTime('');
+        setEndTime('');
+    },[durationType]);
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -27,22 +35,10 @@ const LeaveRequestForm = (props) => {
         } else if (durationType.match('Full Day')) {
             formData.append('duration', 1);
         } else {
-            const days = moment.duration(moment(new Date(endDate)).diff(moment(new Date(startDate)))).days();
+            const days = dayDifference(startDate,endDate,false);
             formData.append('duration', days);
         }
         props.submitFormHandler(formData);
-    }
-
-    const selectLeaveTypeHandler = (event) => {
-        setLeaveTypeId(event.target.value);
-    }
-
-    const selectDurationTypeHandler = (event) => {
-        setDurationType(event.target.value);
-    }
-
-    const onChangeStartDate = (event) => {
-        setStartDate(event.target.value);
     }
 
     const onChangeEndDate = (event) => {
@@ -50,34 +46,30 @@ const LeaveRequestForm = (props) => {
         setEndTime('');
     }
 
-    const onChangeStartTime = (event) => {
-        setStartTime(event.target.value);
-    }
-
-    const onChangeEndTime = (event) => {
-        setEndTime(event.target.value);
-    }
-
     let completeDetails;
 
-    if (leaveTypeId && durationType.match('Multi Days') && startDate && endDate) {
-        completeDetails = moment.duration(moment(new Date(endDate)).diff(new Date(startDate))).days() <= 0 ?
+    if(startTime&&startDate&&(minuteDifference(new Date(),new Date(startDate+'T'+startTime),true)<=0)){
+        completeDetails = <Typography sx={{ color: "red" }} >{'Time must be greater than Current Time'}</Typography>;
+    }
+    else if (leaveTypeId && durationType.match('Multi Days') && startDate && endDate) {
+        completeDetails = dayDifference(startDate,endDate) === 0 ? <Typography sx={{ color: "red" }} >{'Multi Day option can not use for 1 Day. Please use Full Day option'}</Typography>:
+         dayDifference(startDate,endDate) < 0 ?
             <Typography sx={{ color: "red" }} >{'End Date cannot be lower than Start Date'}</Typography> :
             <React.Fragment>
                 <Typography sx={{ color: "green" }}>
                     {`${leaveTypes.filter(leave=>leave.id===leaveTypeId)[0].type} from ${startDate} to ${endDate}`}
                 </Typography>
-                <Typography sx={{ color: "green" }}>{`${moment.duration(moment(new Date(endDate)).diff(moment(new Date(startDate)))).days()} Days`}</Typography>
+                <Typography sx={{ color: "green" }}>{`${dayDifference(startDate,endDate)} Days`}</Typography>
             </React.Fragment>
     } else if (durationType.match('Few Hours') && startDate && startTime && endTime) {
-        completeDetails = moment.duration(moment(new Date(startDate+"T"+endTime)).diff(new Date(startDate+"T"+startTime))).asMinutes() <= 0?
+        completeDetails = minuteDifference(new Date(startDate+"T"+startTime),new Date(startDate+"T"+endTime),true) <= 0?
         <Typography sx={{ color: "red" }} >{'End Time cannot be lower than Start Time'}</Typography> :
         <React.Fragment>
             <Typography sx={{color:"green"}}>
                 {`Short Leave for ${startDate} from ${startTime} to ${endTime}`}
             </Typography>
             <Typography sx={{color:"green"}}>
-                    {`${moment.duration(moment(new Date(startDate + "T" + endTime)).diff(new Date(startDate + "T" + startTime))).hours()} Hours and ${moment.duration(moment(new Date(startDate + "T" + endTime)).diff(new Date(startDate + "T" + startTime))).minutes()} Minutes`}
+                    {`${hourDifference(new Date(startDate + "T" + startTime),new Date(startDate + "T" + endTime),false)} Hours and ${minuteDifference(new Date(startDate + "T" + startTime),new Date(startDate + "T" + endTime),false)} Minutes`}
                 </Typography>
         </React.Fragment>
     } else if (leaveTypeId && (durationType.match('First Half') || durationType.match('Second Half') || durationType.match('Full Day')) && startDate) {
@@ -101,7 +93,7 @@ const LeaveRequestForm = (props) => {
                     boxShadow: 10
                 }
             }
-            maxWidth="450px"
+            maxWidth="400px"
         >
             <Grid
                 container
@@ -113,35 +105,12 @@ const LeaveRequestForm = (props) => {
                     item
                     xs={12}
                 >
-
+                    <TimeToLeaveIcon color='primary' sx={{fontSize:40}} />
                     <Typography
                         variant="h5"
                     >
                         Leave Request
                     </Typography>
-                </Grid>
-                <Grid
-                    item
-                    xs={12}
-                >
-                    {durationType.match('Few Hours')?null:<FormControl variant="standard" fullWidth >
-                        <InputLabel id="demo-simple-select-standard-label">Select Leave Type</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-standard-label"
-                            id="demo-simple-select-standard"
-                            label="Select Leave Type"
-                            name="leaveTypeId"
-                            value={leaveTypeId}
-                            onChange={selectLeaveTypeHandler}
-                        >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            {
-                                leaveTypes.map((leave) => <MenuItem key={leave.id} value={leave.id}>{leave.type}</MenuItem>)
-                            }
-                        </Select>
-                    </FormControl>}
                 </Grid>
                 <Grid
                     item
@@ -154,8 +123,9 @@ const LeaveRequestForm = (props) => {
                             id="demo-simple-select-standard 2"
                             label="Select Duration"
                             name="type"
+                            required
                             value={durationType}
-                            onChange={selectDurationTypeHandler}
+                            onChange={(event)=>setDurationType(event.target.value)}
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -165,6 +135,31 @@ const LeaveRequestForm = (props) => {
                             }
                         </Select>
                     </FormControl>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sx={{mb:1}}
+                >
+                    {durationType.match('Few Hours')||!durationType?null:<FormControl variant="standard" fullWidth >
+                        <InputLabel id="demo-simple-select-standard-label">Select Leave Type</InputLabel>
+                        <Select
+                            labelId="demo-simple-select-standard-label"
+                            id="demo-simple-select-standard"
+                            label="Select Leave Type"
+                            name="leaveTypeId"
+                            required
+                            value={leaveTypeId}
+                            onChange={(event)=>setLeaveTypeId(event.target.value)}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            {
+                                leaveTypes.map((leave) => <MenuItem key={leave.id} value={leave.id}>{leave.type}</MenuItem>)
+                            }
+                        </Select>
+                    </FormControl>}
                 </Grid>
                 {durationType.match('Few Hours') ?
                     <React.Fragment>
@@ -178,8 +173,11 @@ const LeaveRequestForm = (props) => {
                                 type="date"
                                 size="small"
                                 name="date"
+                                required
+                                inputProps={{min:new Date().toISOString().slice(0,10)}}
+                                value={startDate}
                                 InputLabelProps={{ shrink: true }}
-                                onChange={onChangeStartDate}
+                                onChange={(event)=>setStartDate(event.target.value)}
                                 fullWidth
                             />
                         </Grid>
@@ -193,8 +191,10 @@ const LeaveRequestForm = (props) => {
                                 type="time"
                                 size="small"
                                 name="startTime"
+                                required
+                                value={startTime}
                                 InputLabelProps={{ shrink: true }}
-                                onChange={onChangeStartTime}
+                                onChange={(event)=>setStartTime(event.target.value)}
                                 fullWidth
                             />
                         </Grid>
@@ -208,8 +208,10 @@ const LeaveRequestForm = (props) => {
                                 type="time"
                                 size="small"
                                 name="endTime"
+                                required
+                                value={endTime}
                                 InputLabelProps={{ shrink: true }}
-                                onChange={onChangeEndTime}
+                                onChange={(event)=>setEndTime(event.target.value)}
                                 fullWidth
                             />
                         </Grid>
@@ -226,8 +228,11 @@ const LeaveRequestForm = (props) => {
                                     type="date"
                                     size="small"
                                     name="date"
+                                    required
+                                    value={startDate}
+                                    inputProps={{min:new Date().toISOString().slice(0,10)}}
                                     InputLabelProps={{ shrink: true }}
-                                    onChange={onChangeStartDate}
+                                    onChange={(event)=>setStartDate(event.target.value)}
                                     fullWidth
                                 />
                             </Grid>
@@ -243,8 +248,11 @@ const LeaveRequestForm = (props) => {
                                         type="date"
                                         size="small"
                                         name="date"
+                                        required
+                                        value={startDate}
+                                        inputProps={{min:new Date().toISOString().slice(0,10)}}
                                         InputLabelProps={{ shrink: true }}
-                                        onChange={onChangeStartDate}
+                                        onChange={(event)=>setStartDate(event.target.value)}
                                         fullWidth
                                     />
                                 </Grid>
@@ -257,6 +265,9 @@ const LeaveRequestForm = (props) => {
                                         label="End Date"
                                         type="date"
                                         size="small"
+                                        required
+                                        value={endDate}
+                                        inputProps={{min:new Date().toISOString().slice(0,10)}}
                                         InputLabelProps={{ shrink: true }}
                                         onChange={onChangeEndDate}
                                         fullWidth
@@ -291,7 +302,7 @@ const LeaveRequestForm = (props) => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
-                        disabled={startDate && startTime && endTime ? moment.duration(moment(new Date(startDate + "T" + endTime)).diff(moment(new Date(startDate + "T" + startTime)))).asHours() <= 0 : startDate && endDate ? moment.duration(moment(new Date(endDate)).diff(moment(new Date(startDate)))).asDays() <= 0 : false}
+                        disabled={startDate && startTime && endTime ? hourDifference(new Date(startDate + "T" + startTime),new Date(startDate + "T" + endTime),true) <= 0 : startDate && endDate ? dayDifference(new Date(startDate),new Date(endDate)) <= 0 : false}
                     >
                         Submit Request
                     </Button>

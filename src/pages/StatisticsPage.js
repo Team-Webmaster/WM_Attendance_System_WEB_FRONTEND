@@ -1,9 +1,26 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
+import SelfStatisticsForm from '../components/SelfStatisticsForm';
+import TabPanel from '../components/TabPanel';
+import EmployeeStatisticsForm from '../components/EmployeeStatisticsForm';
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
 
 const StatisticsPage = () => {
+
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <React.Fragment>
        <Navigation/>
@@ -35,6 +52,20 @@ const StatisticsPage = () => {
           <Typography>The place to check your performance...</Typography>
         </Grid>
       </Grid>
+      <Box sx={{ width: '100%' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Self Statistics" sx={{ml:30}} {...a11yProps(0)} />
+            <Tab label="Employee Statistics" {...a11yProps(1)} />
+          </Tabs>
+        </Box>
+        <TabPanel value={value} index={0}>
+          <SelfStatisticsForm/>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <EmployeeStatisticsForm/>
+        </TabPanel>
+      </Box>
       <Footer/>
     </React.Fragment>
   )
