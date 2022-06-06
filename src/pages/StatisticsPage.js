@@ -5,6 +5,7 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import SelfStatisticsForm from '../components/SelfStatisticsForm';
 import TabPanel from '../components/TabPanel';
 import EmployeeStatisticsForm from '../components/EmployeeStatisticsForm';
+import StatisticsCharts from '../components/StatisticsCharts';
 
 function a11yProps(index) {
   return {

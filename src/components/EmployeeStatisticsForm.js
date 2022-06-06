@@ -3,7 +3,7 @@ import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { dayDifference } from '../functions/timeDifference';
 
-const chartTypes = ['Bar Chart', 'Pie Chart']
+const chartTypes = ['Bar Chart', 'Pie Chart','Line Chart','Scatter Chart']
 
 const EmployeeStatisticsForm = () => {
 
