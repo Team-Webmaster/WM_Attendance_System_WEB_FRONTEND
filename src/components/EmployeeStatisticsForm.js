@@ -1,40 +1,51 @@
 import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import BarChartIcon from '@mui/icons-material/BarChart';
+import { dayDifference } from '../functions/timeDifference';
 
 const chartTypes = ['Bar Chart', 'Pie Chart']
 
 const EmployeeStatisticsForm = () => {
 
-    const [chartType,setChartType] = React.useState('');
-    const [employeeId,setEmployeeId] = React.useState('');
+    const [chartType, setChartType] = React.useState('');
+    const [employeeId, setEmployeeId] = React.useState('');
+    const [startDate, setStartDate] = React.useState('');
+    const [endDate, setEndDate] = React.useState('');
 
-  return (
-    <Box
-        id="statisticsForm"
+    let completeMsg;
+
+    if (employeeId && chartType && startDate && endDate) {
+        completeMsg = dayDifference(startDate, endDate, true) <= 0 ?
+            <Typography color="red" >Start Date must be less than End Date</Typography> :
+            <Typography color="green" >{`Generate ${chartType} of ${employeeId} for date range ${startDate} to ${endDate}`}</Typography>
+    }
+
+    return (
+        <Box
+            id="statisticsForm"
             component="form"
             // onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {
-                    mx:"10%",
+                    mx: "10%",
                     padding: 3,
                     boxShadow: 10
                 }
             }
-            maxWidth="450px"
+            maxWidth="400px"
         >
             <Grid
-            container
-            spacing={3}
-            mb={2}
-            mt={1}
+                container
+                spacing={3}
+                mb={2}
+                mt={1}
             >
                 <Grid
                     item
                     xs={12}
                 >
-                    <BarChartIcon color="primary" sx={{fontSize:40}} />
+                    <BarChartIcon color="primary" sx={{ fontSize: 40 }} />
                     <Typography
                         variant="h5"
                     >
@@ -46,20 +57,21 @@ const EmployeeStatisticsForm = () => {
                     xs={12}
                 >
                     <FormControl variant="standard" fullWidth >
-                    <InputLabel id="demo-simple-select-standard-label">Select Employee</InputLabel>
+                        <InputLabel id="demo-simple-select-standard-label">Select Employee</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
                             label="Select Employee"
                             name="employeeId"
+                            required
                             value={employeeId}
-                            onChange={(event)=>setEmployeeId(event.target.value)}
+                            onChange={(event) => setEmployeeId(event.target.value)}
                         >
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
                             {
-                                chartTypes.map((type,index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
+                                chartTypes.map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
                             }
                         </Select>
                     </FormControl>
@@ -69,25 +81,26 @@ const EmployeeStatisticsForm = () => {
                     xs={12}
                 >
                     <FormControl variant="standard" fullWidth >
-                    <InputLabel id="demo-simple-select-standard-label">Select Chart Type</InputLabel>
+                        <InputLabel id="demo-simple-select-standard-label">Select Chart Type</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
                             label="Select Chart Type"
                             name="chartType"
                             value={chartType}
-                            onChange={(event)=>setChartType(event.target.value)}
+                            required
+                            onChange={(event) => setChartType(event.target.value)}
                         >
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
                             {
-                                chartTypes.map((type,index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
+                                chartTypes.map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
                             }
                         </Select>
                     </FormControl>
                 </Grid>
-                
+
                 <Grid
                     item
                     xs={12}
@@ -101,7 +114,7 @@ const EmployeeStatisticsForm = () => {
                 <Grid
                     item
                     xs={12}
-                    sx={{display:'flex'}}
+                    sx={{ display: 'flex' }}
                 >
                     <TextField
                         id="outlined-start-date"
@@ -109,11 +122,14 @@ const EmployeeStatisticsForm = () => {
                         type="date"
                         size="small"
                         name="startDate"
+                        required
                         InputLabelProps={{ shrink: true }}
-                        // onChange={onChangeStartDate}
+                        inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+                        value={startDate}
+                        onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
                     />
-                    <Typography sx={{m:1}}> to </Typography>
+                    <Typography sx={{ m: 1 }}> to </Typography>
                     <TextField
                         id="outlined-end-date"
                         label="End Date"
@@ -121,9 +137,19 @@ const EmployeeStatisticsForm = () => {
                         size="small"
                         name="endDate"
                         InputLabelProps={{ shrink: true }}
-                        // onChange={onChangeStartDate}
+                        inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+                        value={endDate}
+                        onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
                     />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                >
+                    {
+                        completeMsg ? completeMsg : null
+                    }
                 </Grid>
                 <Grid
                     item
@@ -132,13 +158,14 @@ const EmployeeStatisticsForm = () => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
+                        disabled={(startDate && endDate && (dayDifference(startDate, endDate, true) <= 0)) ? true : false}
                     >
                         Generate Charts
                     </Button>
                 </Grid>
             </Grid>
         </Box>
-  )
+    )
 }
 
 export default EmployeeStatisticsForm;

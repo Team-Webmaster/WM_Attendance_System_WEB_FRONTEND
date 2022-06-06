@@ -1,13 +1,24 @@
 import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import { dayDifference } from '../functions/timeDifference';
 
 const reportTypes = ['Performance Report', 'Attendee Report', 'Leave Master'];
 
 const EmployeeReportForm = () => {
 
-    const [reportType,setReportType] = React.useState('');
-    const [employeeId,setEmployeeId] = React.useState('');
+    const [reportType, setReportType] = React.useState('');
+    const [employeeId, setEmployeeId] = React.useState('');
+    const [startDate, setStartDate] = React.useState('');
+    const [endDate, setEndDate] = React.useState('');
+
+    let completeMsg;
+
+    if (employeeId && reportType && startDate && endDate) {
+        completeMsg = dayDifference(startDate, endDate, true) <= 0 ?
+            <Typography color="red" >Start Date must be less than End Date</Typography> :
+            <Typography color="green" >{`Generate ${reportType} of ${employeeId} for date range ${startDate} to ${endDate}`}</Typography>
+    }
 
     return (
         <Box
@@ -22,7 +33,7 @@ const EmployeeReportForm = () => {
                     boxShadow: 10
                 }
             }
-            maxWidth="450px"
+            maxWidth="400px"
         >
             <Grid
                 container
@@ -46,20 +57,20 @@ const EmployeeReportForm = () => {
                     xs={12}
                 >
                     <FormControl variant="standard" fullWidth >
-                    <InputLabel id="demo-simple-select-standard-label">Select Employee</InputLabel>
+                        <InputLabel id="demo-simple-select-standard-label">Select Employee</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
                             id="demo-simple-select-standard"
                             label="Select Employee"
                             name="employeeId"
                             value={employeeId}
-                            onChange={(event)=>setEmployeeId(event.target.value)}
+                            onChange={(event) => setEmployeeId(event.target.value)}
                         >
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
                             {
-                                reportTypes.map((type,index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
+                                reportTypes.map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
                             }
                         </Select>
                     </FormControl>
@@ -76,7 +87,7 @@ const EmployeeReportForm = () => {
                             label="Select Report Type"
                             name="reportType"
                             value={reportType}
-                            onChange={(event)=>setReportType(event.target.value)}
+                            onChange={(event) => setReportType(event.target.value)}
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -108,8 +119,10 @@ const EmployeeReportForm = () => {
                         type="date"
                         size="small"
                         name="startDate"
+                        value={startDate}
                         InputLabelProps={{ shrink: true }}
-                        // onChange={onChangeStartDate}
+                        inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+                        onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
@@ -119,10 +132,20 @@ const EmployeeReportForm = () => {
                         type="date"
                         size="small"
                         name="endDate"
+                        value={endDate}
                         InputLabelProps={{ shrink: true }}
-                        // onChange={onChangeStartDate}
+                        inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+                        onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
                     />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                >
+                    {
+                        completeMsg ? completeMsg : null
+                    }
                 </Grid>
                 <Grid
                     item
@@ -131,6 +154,7 @@ const EmployeeReportForm = () => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
+                        disabled={(startDate && endDate && (dayDifference(startDate, endDate, true) <= 0)) ? true : false}
                     >
                         Generate Report
                     </Button>

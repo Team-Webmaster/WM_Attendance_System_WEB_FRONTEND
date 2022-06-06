@@ -1,12 +1,23 @@
 import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import { dayDifference } from '../functions/timeDifference';
 
 const reportTypes = ['Performance Report', 'Attendee Report', 'Leave Master'];
 
 const SelfReportForm = () => {
 
-    const [reportType,setReportType] = React.useState('');
+    const [reportType, setReportType] = React.useState('');
+    const [startDate, setStartDate] = React.useState('');
+    const [endDate, setEndDate] = React.useState('');
+
+    let completeMsg;
+
+    if (reportType && startDate && endDate) {
+        completeMsg = dayDifference(startDate, endDate, true) <= 0 ?
+            <Typography color="red" >Start Date must be less than End Date</Typography> :
+            <Typography color="green" >{`Generate ${reportType} for date range ${startDate} to ${endDate}`}</Typography>
+    }
 
     return (
         <Box
@@ -21,7 +32,7 @@ const SelfReportForm = () => {
                     boxShadow: 10
                 }
             }
-            maxWidth="450px"
+            maxWidth="400px"
         >
             <Grid
                 container
@@ -52,7 +63,7 @@ const SelfReportForm = () => {
                             label="Select Report Type"
                             name="reportType"
                             value={reportType}
-                            onChange={(event)=>setReportType(event.target.value)}
+                            onChange={(event) => setReportType(event.target.value)}
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -84,8 +95,10 @@ const SelfReportForm = () => {
                         type="date"
                         size="small"
                         name="startDate"
+                        value={startDate}
                         InputLabelProps={{ shrink: true }}
-                        // onChange={onChangeStartDate}
+                        inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+                        onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
@@ -95,10 +108,20 @@ const SelfReportForm = () => {
                         type="date"
                         size="small"
                         name="endDate"
+                        value={endDate}
                         InputLabelProps={{ shrink: true }}
-                        // onChange={onChangeStartDate}
+                        inputProps={{ max: new Date().toISOString().slice(0, 10) }}
+                        onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
                     />
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                >
+                    {
+                        completeMsg ? completeMsg : null
+                    }
                 </Grid>
                 <Grid
                     item
@@ -107,6 +130,7 @@ const SelfReportForm = () => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
+                        disabled={(startDate && endDate && (dayDifference(startDate, endDate, true) <= 0)) ? true : false}
                     >
                         Generate Report
                     </Button>

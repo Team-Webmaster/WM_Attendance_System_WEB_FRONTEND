@@ -52,14 +52,14 @@ const LeaveRequestForm = (props) => {
         completeDetails = <Typography sx={{ color: "red" }} >{'Time must be greater than Current Time'}</Typography>;
     }
     else if (leaveTypeId && durationType.match('Multi Days') && startDate && endDate) {
-        completeDetails = dayDifference(startDate,endDate) === 0 ? <Typography sx={{ color: "red" }} >{'Multi Day option can not use for 1 Day. Please use Full Day option'}</Typography>:
-         dayDifference(startDate,endDate) < 0 ?
+        completeDetails = dayDifference(startDate,endDate,true) === 0 ? <Typography sx={{ color: "red" }} >{'Multi Day option can not use for 1 Day. Please use Full Day option'}</Typography>:
+         dayDifference(startDate,endDate,true) < 0 ?
             <Typography sx={{ color: "red" }} >{'End Date cannot be lower than Start Date'}</Typography> :
             <React.Fragment>
                 <Typography sx={{ color: "green" }}>
                     {`${leaveTypes.filter(leave=>leave.id===leaveTypeId)[0].type} from ${startDate} to ${endDate}`}
                 </Typography>
-                <Typography sx={{ color: "green" }}>{`${dayDifference(startDate,endDate)} Days`}</Typography>
+                <Typography sx={{ color: "green" }}>{`${dayDifference(startDate,endDate,true)+1} Days`}</Typography>
             </React.Fragment>
     } else if (durationType.match('Few Hours') && startDate && startTime && endTime) {
         completeDetails = minuteDifference(new Date(startDate+"T"+startTime),new Date(startDate+"T"+endTime),true) <= 0?
