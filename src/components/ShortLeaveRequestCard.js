@@ -3,6 +3,7 @@ import { Box, Button, Modal, Typography, Avatar } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 import FeedIcon from '@mui/icons-material/Feed';
+import { UserContext } from '../store/Context';
 
 const style = {
   position: 'absolute',
@@ -22,6 +23,7 @@ const ShortLeaveRequestCard = (props) => {
   const [openConfirmModal,setOpenConfirmModal] = React.useState(false);
   const [displayMsg,setDisplayMsg] = React.useState('');
   const [isApprove,setIsApprove] = React.useState(true);
+  const {userData} = React.useContext(UserContext);
 
   const acceptClickHandler = ()=>{
     setDisplayMsg('Do you want to confirm your approval ?');
@@ -39,7 +41,7 @@ const ShortLeaveRequestCard = (props) => {
     const approveData = {
       decision:"Approved",
       requestId:props.details.id,
-      approvalId:1
+      approvalId:userData.userId
     }
     props.approveShortLeaveRequestHandler(approveData);
     setOpenDetailsModal(false);
@@ -50,7 +52,7 @@ const ShortLeaveRequestCard = (props) => {
     const approveData = {
       decision:"Rejected",
       requestId:props.details.id,
-      approvalId:1
+      approvalId:userData.userId
     }
     props.approveShortLeaveRequestHandler(approveData);
     setOpenDetailsModal(false);

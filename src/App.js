@@ -46,8 +46,21 @@ axios.interceptors.request.use((config) => {
 function App() {
   const { setUserData } = useContext(UserContext);
   useEffect(()=>{
-    setUserData({name:"Hi"});
-  },[])
+    setUserData(
+      {
+        userId: 1,
+        name: "Lakshitha",
+        nic: "982582105V",
+        email: "jokeekak@gmail.com",
+        password: "$2a$11$WI/JjfiBI2ZHe7Q1FhFk.OmDRIPReAVKvQ/80WZawjNhwLWiDNAdG",
+        address: "Galle",
+        telephone: "0781870330",
+        profilePic: "https://localhost:5001/Images/20220408_153919.jpg",
+        type: 0,
+        noOfAnnualLeaves: 20
+      }
+    );
+  },[setUserData])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

@@ -1,32 +1,47 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { MultiSelect } from 'react-multi-select-component';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { minuteDifference } from '../functions/timeDifference';
+import { UserContext } from '../store/Context';
 
-const VideoConferenceForm = () => {
+const VideoConferenceForm = (props) => {
 
-    const [selected,setSelected] = useState([]);
-    const [date,setDate] = useState('');
-    const [time,setTime] = useState('');
+    const [selected, setSelected] = useState([]);
+    const [date, setDate] = useState('');
+    const [time, setTime] = useState('');
+    const { userData } = useContext(UserContext);
+
+    const submitHandler = (event)=>{
+        event.preventDefault();
+        const conferenceData = {
+            conferenceId:new Date().valueOf().toString(),
+            date:date,
+            time:time,
+            hostId:userData.userId,
+            schedulerId:userData.userId,
+            participants:selected
+        };
+        props.submitFormHandler(conferenceData);
+    };
 
     let completeMsg;
 
-    if(date&&time&&selected.length>0){
-        completeMsg = minuteDifference(new Date(),new Date(date+'T'+time),true)<=0?
-        <Typography sx={{ color: "red" }} >{'Conference can not be schedule for past times'}</Typography>:
-        <Typography sx={{ color: "green" }} >{`Video Conference Start at ${time} of ${date}`}</Typography>
-    }
+    if (date && time && selected.length > 0) {
+        completeMsg = minuteDifference(new Date(), new Date(date + 'T' + time), true) <= 0 ?
+            <Typography sx={{ color: "red" }} >{'Conference can not be schedule for past times'}</Typography> :
+            <Typography sx={{ color: "green" }} >{`Video Conference Start at ${time} of ${date}`}</Typography>;
+    };
 
     return (
         <Box
-        id="videoConferenceForm"
+            id="videoConferenceForm"
             component="form"
-            // onSubmit={submitHandler}
+            onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {
-                    mx:"10%",
+                    mx: "10%",
                     padding: 3,
                     boxShadow: 10
                 }
@@ -34,16 +49,16 @@ const VideoConferenceForm = () => {
             maxWidth="400px"
         >
             <Grid
-            container
-            spacing={3}
-            mb={2}
-            mt={1}
+                container
+                spacing={3}
+                mb={2}
+                mt={1}
             >
                 <Grid
                     item
                     xs={12}
                 >
-                    <VideocamIcon color="primary" sx={{fontSize:40}} />
+                    <VideocamIcon color="primary" sx={{ fontSize: 40 }} />
                     <Typography
                         variant="h5"
                     >
@@ -62,8 +77,8 @@ const VideoConferenceForm = () => {
                         name="date"
                         value={date}
                         InputLabelProps={{ shrink: true }}
-                        inputProps={{min:new Date().toISOString().slice(0,10)}}
-                        onChange={(event)=>setDate(event.target.value)}
+                        inputProps={{ min: new Date().toISOString().slice(0, 10) }}
+                        onChange={(event) => setDate(event.target.value)}
                         fullWidth
                         required
                     />
@@ -80,7 +95,7 @@ const VideoConferenceForm = () => {
                         name="startTime"
                         value={time}
                         InputLabelProps={{ shrink: true }}
-                        onChange={(event)=>setTime(event.target.value)}
+                        onChange={(event) => setTime(event.target.value)}
                         fullWidth
                         required
                     />
@@ -90,8 +105,8 @@ const VideoConferenceForm = () => {
                     xs={12}
                 >
                     <MultiSelect
-                        options={[{label:"Lakshitha",value:1},{label:"Kumara",value:2},{label:"Lak",value:3}]}
-                        value={selected} 
+                        options={[{ label: "Lakshitha", value: 1 }, { label: "Kumara", value: 2 }, { label: "Lak", value: 3 }]}
+                        value={selected}
                         onChange={setSelected}
                     />
                 </Grid>
@@ -110,7 +125,7 @@ const VideoConferenceForm = () => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
-                        disabled={!selected.length>0}
+                        disabled={!selected.length > 0}
                     >
                         Schedule Now
                     </Button>

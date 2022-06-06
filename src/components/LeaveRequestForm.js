@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Grid, Button, Typography, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { dayDifference, hourDifference, minuteDifference } from '../functions/timeDifference';
+import { UserContext } from '../store/Context';
 
 const leaveTypes = [{ id: 1, type: 'Sick Leave' }, { id: 2, type: 'Normal Leave' }, { id: 3, type: 'Day off' }];
 const durations = ['Few Hours', 'First Half', 'Second Half', 'Full Day', 'Multi Days'];
@@ -13,6 +14,7 @@ const LeaveRequestForm = (props) => {
     const [endDate, setEndDate] = React.useState('');
     const [startTime, setStartTime] = React.useState('');
     const [endTime, setEndTime] = React.useState('');
+    const {userData} = React.useContext(UserContext);
 
     React.useEffect(()=>{
         setStartDate('');
@@ -25,7 +27,7 @@ const LeaveRequestForm = (props) => {
         event.preventDefault();
         const formData = new FormData(document.getElementById('leaveRequestForm'));
         formData.append('status', 'Pending');
-        formData.append('senderId',1);
+        formData.append('senderId',userData.userId);
         if (durationType.match('Few Hours')) {
             formData.delete('type');
             props.submitShortLeaveHandler(formData);

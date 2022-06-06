@@ -3,6 +3,18 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { Grid, Typography } from '@mui/material';
 import VideoConferenceForm from '../components/VideoConferenceForm';
+import axios from 'axios';
+
+const scheduleConferenceHandler = (confData)=>{
+  console.log(confData);
+  axios.post('https://localhost:5001/api/VideoConference',confData)
+    .then((res)=>{
+      console.log(res);
+    })
+    .catch((err)=>{
+      console.log(err);
+    });
+}
 
 const VideoConferencePage = () => {
   return (
@@ -44,7 +56,7 @@ const VideoConferencePage = () => {
           md={5}
           lg={12}
         >
-          <VideoConferenceForm/>
+          <VideoConferenceForm submitFormHandler={scheduleConferenceHandler} />
         </Grid>
       </Grid>
       <Footer/>
