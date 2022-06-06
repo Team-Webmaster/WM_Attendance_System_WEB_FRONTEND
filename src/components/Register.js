@@ -97,7 +97,7 @@ const Register = (props) => {
             ml:"10%"
           }
         }
-        maxWidth="500px"
+        maxWidth="450px"
       >
         <PersonAddAltIcon color="primary" sx={{ fontSize: 60 }} />
         <Typography
@@ -121,6 +121,7 @@ const Register = (props) => {
               size="small"
               type="text"
               fullWidth
+              required
               inputRef={fistNameRef}
             />
           </Grid>
@@ -135,6 +136,7 @@ const Register = (props) => {
               size="small"
               type="text"
               fullWidth
+              required
               inputRef={lastNameRef}
             />
           </Grid>
@@ -148,6 +150,7 @@ const Register = (props) => {
               type="email"
               size="small"
               fullWidth
+              required
               inputRef={emailRef}
             />
           </Grid>
@@ -163,6 +166,7 @@ const Register = (props) => {
               type={showPassword ? "text" : "password"}
               size="small"
               fullWidth
+              required
               inputRef={passwordRef}
               InputProps={
                 {
@@ -193,6 +197,7 @@ const Register = (props) => {
               size="small"
               helperText={isPasswordCorrect?"":"Did not match with password"}
               fullWidth
+              required
               inputRef={confirmPasswordRef}
               InputProps={
                 {
@@ -221,6 +226,7 @@ const Register = (props) => {
               type="text"
               size="small"
               fullWidth
+              required
               inputRef={nicRef}
             />
           </Grid>
@@ -235,6 +241,7 @@ const Register = (props) => {
               type="tel"
               size="small"
               fullWidth
+              required
               inputRef={telephoneRef}
             />
           </Grid>
@@ -259,6 +266,7 @@ const Register = (props) => {
                 type="text"
                 size="small"
                 fullWidth
+                required
                 inputRef={addressNoRef}
               />
             </Grid>
@@ -272,6 +280,7 @@ const Register = (props) => {
                 type="text"
                 size="small"
                 fullWidth
+                required
                 inputRef={addressStreetRef}
               />
             </Grid>
@@ -285,6 +294,7 @@ const Register = (props) => {
                 type="text"
                 size="small"
                 fullWidth
+                required
                 inputRef={addreessCityRef}
               />
             </Grid>
@@ -296,7 +306,7 @@ const Register = (props) => {
                 id="combo-box"
                 size="small"
                 options={provinceList}
-                renderInput={(params) => <TextField {...params} inputRef={addressProvinceRef} label="Province" />}
+                renderInput={(params) => <TextField {...params} inputRef={addressProvinceRef} required label="Province" />}
               />
             </Grid>
           </Grid>
@@ -311,6 +321,7 @@ const Register = (props) => {
               label="Prifile Picture"
               type="file"
               size="small"
+              required
               InputLabelProps={{ shrink: true }}
               fullWidth
               onChange={showPreview}
@@ -332,7 +343,7 @@ const Register = (props) => {
             item
             xs={12}
           >
-            <Typography>Already have a account ?  <Button component={RouterLink} to='/'>Login</Button></Typography>
+            <Typography>Already have a account ?  <Button component={RouterLink} to='/login'>Login</Button></Typography>
           </Grid>
         </Grid>
       </Box>
