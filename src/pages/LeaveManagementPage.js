@@ -6,6 +6,7 @@ import LeaveRequestForm from '../components/LeaveRequestForm';
 import axios from 'axios';
 import LeaveApproval from '../components/LeaveApproval';
 import TabPanel from '../components/TabPanel';
+import LeaveDetails from '../components/LeaveDetails';
 
 function a11yProps(index) {
   return {
@@ -70,8 +71,7 @@ const LeaveManagementPage = () => {
           lg={6}
           sx={{ textAlign: "left" }}
         >
-          <Typography variant='h4' sx={{fontWeight:"bold"}} >Leave-Management</Typography>
-          <Typography>The place to manage all your leaves...</Typography>
+          <LeaveDetails/>
         </Grid>
       </Grid>
       <Box sx={{ width: '100%' }}>

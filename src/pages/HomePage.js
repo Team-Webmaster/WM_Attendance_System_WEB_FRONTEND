@@ -14,6 +14,7 @@ const HomePage = () => {
   return (
     <div>
       <Navigation/>
+      {userData&&
       <Grid container component="main" sx={{ height: "90vh", p: 5,mt:8 }}>
         <Grid
           item
@@ -39,14 +40,14 @@ const HomePage = () => {
           sx={{ textAlign: "left" }}
         >
           <Grid sx={{ mt: "8%", ml: "10%" }}>
-            <Typography sx={{ fontSize: "40px", fontWeight: "bold" }} >{timeGreeting(date)} Lakshitha !</Typography>
-            <Typography sx={{ fontSize: "40px", fontWeight: "bold" }} >Welcome Back Chief...</Typography>
+            <Typography sx={{ fontSize: "30px", fontWeight: "bold" }} >{timeGreeting(date)} {`${userData.name}`} !</Typography>
+            <Typography sx={{ fontSize: "30px", fontWeight: "bold" }} >Welcome Back Chief...</Typography>
             <Clock format={'h:mm:ss A'} ticking={true} timezone={'Asia/Colombo'} style={{ fontSize: "60px", fontWeight: "bold" }} />
             <Typography sx={{ fontSize: "60px", fontWeight: "bold" }} >{arr[0].toUpperCase()}</Typography>
             <Typography sx={{ fontSize: "60px", fontWeight: "bold" }} >{date.getMonth() + 1}/{arr[2]}/{arr[3]}</Typography>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid>}
       <Footer/>
     </div>
   )

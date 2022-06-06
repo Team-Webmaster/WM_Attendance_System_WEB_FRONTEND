@@ -66,6 +66,7 @@ const LogIn = (props) => {
               size="small"
               helperText={props.errState&&props.errMsg==="Email not found"?"*"+props.errMsg:null}
               fullWidth
+              required
               inputRef={emailRef}
             />
           </Grid>
@@ -81,6 +82,7 @@ const LogIn = (props) => {
               size="small"
               helperText={props.errState&&props.errMsg==="Password Incorrect"?"*"+props.errMsg:null}
               fullWidth
+              required
               inputRef={passwordRef}
               InputProps={
                 {

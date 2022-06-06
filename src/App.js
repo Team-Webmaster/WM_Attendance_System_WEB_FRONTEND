@@ -60,7 +60,7 @@ function App() {
         noOfAnnualLeaves: 20
       }
     );
-  },[setUserData])
+  },[])
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
