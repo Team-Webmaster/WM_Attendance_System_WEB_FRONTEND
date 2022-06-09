@@ -37,7 +37,7 @@ const LeaveRequestForm = (props) => {
         } else if (durationType.match('Full Day')) {
             formData.append('duration', 1);
         } else {
-            const days = dayDifference(startDate,endDate,false);
+            const days = dayDifference(startDate,endDate,false)+1;
             formData.append('duration', days);
         }
         props.submitFormHandler(formData);
@@ -286,6 +286,8 @@ const LeaveRequestForm = (props) => {
                             label="Special Notes"
                             size="small"
                             name="specialNote"
+                            inputProps={{maxLength:100}}
+                            multiline
                             fullWidth
                         />
                     </Grid> : null}
@@ -304,7 +306,7 @@ const LeaveRequestForm = (props) => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
-                        disabled={startDate && startTime && endTime ? hourDifference(new Date(startDate + "T" + startTime),new Date(startDate + "T" + endTime),true) <= 0 : startDate && endDate ? dayDifference(new Date(startDate),new Date(endDate)) <= 0 : false}
+                        disabled={startDate && startTime && endTime ? (hourDifference(new Date(startDate + "T" + startTime),new Date(startDate + "T" + endTime),true) <= 0 || hourDifference(new Date(),new Date(startDate + "T" + startTime),true) <= 0) : startDate && endDate ? dayDifference(new Date(startDate),new Date(endDate)) <= 0 :false}
                     >
                         Submit Request
                     </Button>

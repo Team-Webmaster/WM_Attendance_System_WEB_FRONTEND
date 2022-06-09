@@ -62,6 +62,7 @@ const StatisticsPage = () => {
         </Box>
         <TabPanel value={value} index={0}>
           <SelfStatisticsForm/>
+          <StatisticsCharts/>
         </TabPanel>
         <TabPanel value={value} index={1}>
           <EmployeeStatisticsForm/>

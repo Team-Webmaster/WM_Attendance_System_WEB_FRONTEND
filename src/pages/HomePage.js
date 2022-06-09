@@ -7,8 +7,8 @@ import Footer from '../components/Footer';
 import { UserContext } from '../store/Context';
 
 const HomePage = () => {
+
   const { userData } = useContext(UserContext);
-  console.log(userData);
   const date = new Date();
   const arr = date.toDateString().split(' ');
   return (

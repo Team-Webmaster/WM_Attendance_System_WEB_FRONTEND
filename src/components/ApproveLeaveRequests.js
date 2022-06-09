@@ -6,6 +6,7 @@ import axios from 'axios';
 const ApproveLeaveRequests = ({ pendingRequests, reFetch }) => {
 
     const approveLeaveRequest = (approveData) => {
+        console.log(approveData)
         axios.post('https://localhost:5001/api/Request/approve-leave', approveData)
             .then((res) => {
                 console.log(res);

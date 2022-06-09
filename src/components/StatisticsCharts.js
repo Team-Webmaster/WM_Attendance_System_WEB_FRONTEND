@@ -1,5 +1,5 @@
 import React from 'react';
-import PieChart from './PieChart';
+import ScatterChart from './ScatterChart';
 
 const chartData = {
     labels: ['Red', 'Orange', 'Blue'],
@@ -21,9 +21,9 @@ const chartData = {
 
 const StatisticsCharts = () => {
   return (
-    <PieChart
+    <ScatterChart
         chartData={chartData}
-        textTitle="Pie Chart"
+        textTitle="Scatter Chart"
     />
   )
 }

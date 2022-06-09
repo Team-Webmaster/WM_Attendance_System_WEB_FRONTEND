@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Grid, Tab, Tabs, Box, Typography } from '@mui/material';
+import { Grid, Tab, Tabs, Box } from '@mui/material';
 import Footer from '../components/Footer';
 import LeaveRequestForm from '../components/LeaveRequestForm';
 import axios from 'axios';

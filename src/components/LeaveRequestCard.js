@@ -19,40 +19,40 @@ const style = {
 
 const LeaveRequestCard = (props) => {
 
-  const [openDetailsModal,setOpenDetailsModal] = React.useState(false);
-  const [openConfirmModal,setOpenConfirmModal] = React.useState(false);
-  const [displayMsg,setDisplayMsg] = React.useState('');
-  const [isApprove,setIsApprove] = React.useState(true);
-  const {userData} = React.useContext(UserContext);
+  const [openDetailsModal, setOpenDetailsModal] = React.useState(false);
+  const [openConfirmModal, setOpenConfirmModal] = React.useState(false);
+  const [displayMsg, setDisplayMsg] = React.useState('');
+  const [isApprove, setIsApprove] = React.useState(true);
+  const { userData } = React.useContext(UserContext);
 
-  const acceptClickHandler = ()=>{
+  const acceptClickHandler = () => {
     setDisplayMsg('Do you want to confirm your approval ?');
     setOpenConfirmModal(true);
     setIsApprove(true);
   }
 
-  const rejectClickHandler = ()=>{
+  const rejectClickHandler = () => {
     setDisplayMsg('Do you want to confirm your rejection ?');
     setOpenConfirmModal(true);
     setIsApprove(false);
   }
 
-  const approveLeaveHandler = ()=>{
+  const approveLeaveHandler = () => {
     const approveData = {
-      decision:"Approved",
-      requestId:props.details.id,
-      approvalId:userData.userId
+      decision: "Approved",
+      requestId: props.details.id,
+      approvalId: userData.userId
     }
     props.approveLeaveRequestHandler(approveData);
     setOpenDetailsModal(false);
     setOpenConfirmModal(false);
   }
 
-  const rejectLeaveHandler = ()=>{
+  const rejectLeaveHandler = () => {
     const approveData = {
-      decision:"Rejected",
-      requestId:props.details.id,
-      approvalId:userData.userId
+      decision: "Rejected",
+      requestId: props.details.id,
+      approvalId: userData.userId
     }
     props.approveLeaveRequestHandler(approveData);
     setOpenDetailsModal(false);
@@ -61,49 +61,49 @@ const LeaveRequestCard = (props) => {
 
   return (
     <React.Fragment>
-      <Box sx={{ width: "100%",display:"flex", justifyContent: 'center', p: 1}} >
-        <Avatar alt={props.details.name} src="https://localhost:5001/Images/20220408_153919.jpg" sx={{width:50,height:50}} />
-        <Box sx={{width:"25%",ml:3}}>
-        <Typography sx={{ fontSize:14, textAlign: "left" }} >Name : {props.details.name}</Typography>
-        <Typography sx={{ fontSize:14, textAlign: "left" }} >NIC : {props.details.nic}</Typography>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: 'center', p: 1 }} >
+        <Avatar alt={props.details.name} src="https://localhost:5001/Images/20220408_153919.jpg" sx={{ width: 50, height: 50 }} />
+        <Box sx={{ width: "25%", ml: 3 }}>
+          <Typography sx={{ fontSize: 14, textAlign: "left" }} >Name : {props.details.name}</Typography>
+          <Typography sx={{ fontSize: 14, textAlign: "left" }} >NIC : {props.details.nic}</Typography>
         </Box>
-        <Button size="small" color='success' variant='contained' sx={{ mx: 1,my:0.7}} onClick={acceptClickHandler} endIcon={<DoneIcon/>} >Accept</Button>
-        <Button size="small" color='error' variant='outlined' sx={{ mx: 1, my:0.7}} onClick={rejectClickHandler} endIcon={<CloseIcon/>} >Reject</Button>
-        <Button size="small" color='info' variant='outlined' sx={{ mx: 1, my:0.7}} onClick={()=>setOpenDetailsModal(true)} endIcon={<FeedIcon/>} >Details</Button>
+        <Button size="small" color='success' variant='contained' sx={{ mx: 1, my: 0.7 }} onClick={acceptClickHandler} endIcon={<DoneIcon />} >Accept</Button>
+        <Button size="small" color='error' variant='outlined' sx={{ mx: 1, my: 0.7 }} onClick={rejectClickHandler} endIcon={<CloseIcon />} >Reject</Button>
+        <Button size="small" color='info' variant='outlined' sx={{ mx: 1, my: 0.7 }} onClick={() => setOpenDetailsModal(true)} endIcon={<FeedIcon />} >Details</Button>
       </Box>
-      <Modal open={openDetailsModal} onClose={()=>setOpenDetailsModal(false)} >
-      <Box sx={style}>
-        <Box sx={{width:"100%",ml:8}} >
-          <Avatar src="https://localhost:5001/Images/20220408_153919.jpg" sx={{ml:12,width:80,height:80}} />
-          <Typography sx={{ mt: 1 }} >
-            Name: {props.details.name}
-          </Typography>
-          <Typography sx={{ mt: 1 }}>
-            NIC: {props.details.nic}
-          </Typography>
-          <Typography sx={{ mt: 1 }}>
-            Leave Reason: {props.details.type}
-          </Typography>
-          <Typography sx={{ mt: 1 }}>
-            Type: {props.details.durationType}
-          </Typography>
-          <Typography sx={{ mt: 1 }}>
-            Duration: {props.details.duration}
-          </Typography>
-          <Box sx={{ml:15}}>
-          <Button size="small" color='success' variant='contained' sx={{ mx: 1 }} onClick={acceptClickHandler} >Accept</Button>
-        <Button size="small" color='error' variant='outlined' sx={{ mx: 1 }} onClick={rejectClickHandler} >Reject</Button>
-        </Box>
-        </Box>
+      <Modal open={openDetailsModal} onClose={() => setOpenDetailsModal(false)} >
+        <Box sx={style}>
+          <Box sx={{ width: "100%", ml: 8 }} >
+            <Avatar src="https://localhost:5001/Images/20220408_153919.jpg" sx={{ ml: 12, width: 80, height: 80 }} />
+            <Typography sx={{ mt: 1 }} >
+              Name: {props.details.name}
+            </Typography>
+            <Typography sx={{ mt: 1 }}>
+              NIC: {props.details.nic}
+            </Typography>
+            <Typography sx={{ mt: 1 }}>
+              Leave Reason: {props.details.type}
+            </Typography>
+            <Typography sx={{ mt: 1 }}>
+              Type: {props.details.durationType}
+            </Typography>
+            <Typography sx={{ mt: 1 }}>
+              Duration: {props.details.duration}
+            </Typography>
+            <Box sx={{ ml: 15 }}>
+              <Button size="small" color='success' variant='contained' sx={{ mx: 1 }} onClick={acceptClickHandler} >Accept</Button>
+              <Button size="small" color='error' variant='outlined' sx={{ mx: 1 }} onClick={rejectClickHandler} >Reject</Button>
+            </Box>
+          </Box>
         </Box>
       </Modal>
-      <Modal open={openConfirmModal} onClose={()=>setOpenConfirmModal(false)} >
-      <Box sx={style}>
+      <Modal open={openConfirmModal} onClose={() => setOpenConfirmModal(false)} >
+        <Box sx={style}>
           {
-            displayMsg?<Typography>{displayMsg}</Typography>:null
+            displayMsg ? <Typography>{displayMsg}</Typography> : null
           }
-          <Button size="small" color='success' variant='contained' sx={{ mx: 1 }} onClick={isApprove?approveLeaveHandler:rejectLeaveHandler} >Confirm</Button>
-        <Button size="small" color='error' variant='outlined' sx={{ mx: 1 }} onClick={()=>setOpenConfirmModal(false)} >Cancel</Button>
+          <Button size="small" color='success' variant='contained' sx={{ mx: 1 }} onClick={isApprove ? approveLeaveHandler : rejectLeaveHandler} >Confirm</Button>
+          <Button size="small" color='error' variant='outlined' sx={{ mx: 1 }} onClick={() => setOpenConfirmModal(false)} >Cancel</Button>
         </Box>
       </Modal>
     </React.Fragment>
