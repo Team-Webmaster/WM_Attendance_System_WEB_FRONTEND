@@ -145,10 +145,12 @@ const Register = (props) => {
             xs={12}
           >
             <TextField
+              error={props.emailErrState}
               id="outlined-email"
               label="Email"
               type="email"
               size="small"
+              helperText={props.emailErr}
               fullWidth
               required
               inputRef={emailRef}
@@ -317,10 +319,12 @@ const Register = (props) => {
             sm={5}
           >
             <TextField
+              error={props.profilePicErrState}
               id="outlined-profilePic"
               label="Prifile Picture"
               type="file"
               size="small"
+              helperText={props.profilePicErr}
               required
               InputLabelProps={{ shrink: true }}
               fullWidth

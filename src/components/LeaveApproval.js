@@ -23,7 +23,7 @@ const LeaveApproval = () => {
 
   if (!data) {
     return (
-      <CircularProgress color="inherit" />
+      <CircularProgress />
     );
   }
   return (

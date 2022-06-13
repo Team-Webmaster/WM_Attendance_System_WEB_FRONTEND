@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Grid, Typography } from '@mui/material';
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import Clock from 'react-live-clock';
 import timeGreeting from 'greeting-time';
 import Navigation from '../components/Navigation';
@@ -7,10 +7,17 @@ import Footer from '../components/Footer';
 import { UserContext } from '../store/Context';
 
 const HomePage = () => {
+
   const { userData } = useContext(UserContext);
-  console.log(userData);
   const date = new Date();
   const arr = date.toDateString().split(' ');
+
+  if(!userData){
+    return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center"}} >
+        <CircularProgress sx={{mt:"20%"}} size={50} />
+      </Grid>
+  }
+
   return (
     <div>
       <Navigation/>
@@ -40,7 +47,7 @@ const HomePage = () => {
           sx={{ textAlign: "left" }}
         >
           <Grid sx={{ mt: "8%", ml: "10%" }}>
-            <Typography sx={{ fontSize: "30px", fontWeight: "bold" }} >{timeGreeting(date)} {`${userData.name}`} !</Typography>
+            <Typography sx={{ fontSize: "30px", fontWeight: "bold" }} >{timeGreeting(date)} {`${userData.name.split(' ')[0]}`} !</Typography>
             <Typography sx={{ fontSize: "30px", fontWeight: "bold" }} >Welcome Back Chief...</Typography>
             <Clock format={'h:mm:ss A'} ticking={true} timezone={'Asia/Colombo'} style={{ fontSize: "60px", fontWeight: "bold" }} />
             <Typography sx={{ fontSize: "60px", fontWeight: "bold" }} >{arr[0].toUpperCase()}</Typography>

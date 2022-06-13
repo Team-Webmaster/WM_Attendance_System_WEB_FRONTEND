@@ -16,12 +16,18 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Drawer } from '@mui/material';
 import SideMenu from './SideMenu';
 import { Link as RouterLink } from 'react-router-dom';
+import { UserContext } from '../store/Context';
+import authService from '../services/auth.service';
+import { useNavigate } from 'react-router-dom';
 
 const pages = ['Home', 'About Us'];
-const paths = ['/home','/about-us'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const paths = ['/home', '/about-us'];
+const settings = ['Profile', 'Account', 'Dashboard'];
 
 const Navigation = () => {
+
+    const { userData, setUserData } = React.useContext(UserContext);
+    const navigate = useNavigate();
 
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [isMenu, setIsMenu] = React.useState(false);
@@ -45,6 +51,12 @@ const Navigation = () => {
         setIsMenu(false);
     };
 
+    const handleClickLogOut = ()=>{
+        authService.logout();
+        navigate('/login');
+        setUserData(null);
+    }
+
     return (
         <header>
             <Drawer
@@ -54,7 +66,7 @@ const Navigation = () => {
             >
                 <SideMenu toggleDrawer={toggleDrawer} />
             </Drawer>
-            <AppBar position="fixed" color="transparent" sx={{backgroundColor:"rgba(255,255,255,0.9)"}} >
+            <AppBar position="fixed" color="transparent" sx={{ backgroundColor: "rgba(255,255,255,0.9)" }} >
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <IconButton
@@ -79,12 +91,12 @@ const Navigation = () => {
                             variant="h6"
                             noWrap
                             component="div"
-                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, fontWeight:"bold"}}
+                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' }, fontWeight: "bold" }}
                         >
                             WM Attendance System
                         </Typography>
                         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: "flex-end" } }}>
-                            {pages.map((page,index) => (
+                            {pages.map((page, index) => (
                                 <Button
                                     key={page}
                                     sx={{ my: 1, color: 'black', display: 'block', fontWeight: "bold", mx: 1 }}
@@ -108,7 +120,7 @@ const Navigation = () => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="User" src={process.env.PUBLIC_URL + "/images/user.png"} />
+                                    <Avatar alt="User" src={userData && `https://localhost:5001/Images/${userData.profilePic}`} />
                                 </IconButton>
                             </Tooltip>
                             <Menu
@@ -132,6 +144,9 @@ const Navigation = () => {
                                         <Typography textAlign="center">{setting}</Typography>
                                     </MenuItem>
                                 ))}
+                                <MenuItem key='Log out' onClick={handleClickLogOut}>
+                                    <Typography textAlign="center">Log out</Typography>
+                                </MenuItem>
                             </Menu>
                         </Box>
                     </Toolbar>

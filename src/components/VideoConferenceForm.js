@@ -1,15 +1,18 @@
-import React, { useContext, useState } from 'react';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { MultiSelect } from 'react-multi-select-component';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import { minuteDifference } from '../functions/timeDifference';
 import { UserContext } from '../store/Context';
+import useFetch from '../hooks/useFetch';
 
 const VideoConferenceForm = (props) => {
 
+    const {data} = useFetch('https://localhost:5001/api/User');
     const [selected, setSelected] = useState([]);
     const [date, setDate] = useState('');
     const [time, setTime] = useState('');
+    const [hostId,setHostId] = useState('');
     const { userData } = useContext(UserContext);
 
     const submitHandler = (event)=>{
@@ -18,9 +21,9 @@ const VideoConferenceForm = (props) => {
             conferenceId:new Date().valueOf().toString(),
             date:date,
             time:time,
-            hostId:userData.userId,
+            hostId:hostId?hostId:userData.userId,
             schedulerId:userData.userId,
-            participants:selected
+            participants:selected.map(participant=>participant.value).filter(user=>user!==userData.userId&&user!==hostId)
         };
         props.submitFormHandler(conferenceData);
     };
@@ -32,7 +35,7 @@ const VideoConferenceForm = (props) => {
             <Typography sx={{ color: "red" }} >{'Conference can not be schedule for past times'}</Typography> :
             <Typography sx={{ color: "green" }} >{`Video Conference Start at ${time} of ${date}`}</Typography>;
     };
-
+    console.log(selected);
     return (
         <Box
             id="videoConferenceForm"
@@ -100,15 +103,35 @@ const VideoConferenceForm = (props) => {
                         required
                     />
                 </Grid>
+                {userData.type===2&&data&&<Grid
+                    item
+                    xs={12}
+                >
+                        <FormControl variant="standard" fullWidth >
+                        <InputLabel>Select Host</InputLabel>
+                        <Select
+                            required
+                            value={hostId}
+                            onChange={(event)=>setHostId(event.target.value)}
+                        >
+                            <MenuItem value="">
+                                <em>None</em>
+                            </MenuItem>
+                            {data.filter(user=>user.type!==2).map(host=><MenuItem key={host.userId} value={host.userId} >{host.name}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+                </Grid>}
                 <Grid
                     item
                     xs={12}
                 >
-                    <MultiSelect
-                        options={[{ label: "Lakshitha", value: 1 }, { label: "Kumara", value: 2 }, { label: "Lak", value: 3 }]}
+                    {data&&<MultiSelect
+                        options={data.map((user)=>{
+                            return {label:user.name,value:user.userId}
+                        }).filter(user=>user.value!==userData.userId&&user.value!==hostId)}
                         value={selected}
                         onChange={setSelected}
-                    />
+                    />}
                 </Grid>
                 <Grid
                     item

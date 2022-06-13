@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom'
 import LogIn from '../components/LogIn';
-import axios from 'axios';
 import { Grid } from '@mui/material';
 import SimpleFooter from '../components/SimpleFooter';
 import SimpleNavigation from '../components/SimpleNavigation';
 import { UserContext } from '../store/Context';
+import authService from '../services/auth.service';
 
 const LoginPage = () => {
   const [errState, setErrState] = useState(false);
@@ -13,22 +13,18 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const { setUserData } = useContext(UserContext);
 
-  const loginHandler = (loginData) => {
-    axios.post('https://localhost:5001/api/User/login', loginData)
-      .then((response) => {
-        if (response.data.state) {
+  const loginHandler = async(loginData) => {
+    const response = await authService.login(loginData);
+        if (response.status===200) {
           setUserData(response.data.data);
           navigate('/home');
         }
-        else {
+        else if(response.status===400) {
           setErrState(true);
           setErrMsg(response.data.message);
-          console.log(errState);
+        }else{
+          console.log(response);
         }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
   }
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
