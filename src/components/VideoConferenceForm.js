@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { MultiSelect } from 'react-multi-select-component';
 import VideocamIcon from '@mui/icons-material/Videocam';
@@ -148,7 +148,7 @@ const VideoConferenceForm = (props) => {
                     <Button size="medium"
                         type="submit"
                         variant="contained"
-                        disabled={!selected.length > 0}
+                        disabled={!selected.length > 0 || minuteDifference(new Date(), new Date(date + 'T' + time), true) <= 0}
                     >
                         Schedule Now
                     </Button>

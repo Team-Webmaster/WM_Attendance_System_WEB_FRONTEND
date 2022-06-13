@@ -6,12 +6,22 @@ import TabPanel from '../components/TabPanel';
 import EmployeeReportForm from '../components/EmployeeReportForm';
 import SelfReportForm from '../components/SelfReportForm';
 import { UserContext } from '../store/Context';
+import axios from 'axios';
 
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
     'aria-controls': `simple-tabpanel-${index}`,
   };
+}
+
+const generateReports = (reportData)=>{
+  axios.post('https://localhost:5001/api/Report/generate-report',reportData)
+    .then((res)=>{
+      console.log(res);
+    }).catch((err)=>{
+      console.log(err);
+    })
 }
 
 const ReportPage = () => {
@@ -68,10 +78,10 @@ const ReportPage = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <SelfReportForm/>
+          <SelfReportForm submitReportFormHandler={generateReports} />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <EmployeeReportForm/>
+          <EmployeeReportForm submitReportFormHandler={generateReports} />
         </TabPanel>
       </Box>
       <Footer/>
