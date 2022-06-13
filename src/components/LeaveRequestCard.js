@@ -62,9 +62,9 @@ const LeaveRequestCard = (props) => {
   return (
     <React.Fragment>
       <Box sx={{ width: "100%", display: "flex", justifyContent: 'center', p: 1 }} >
-        <Avatar alt={props.details.name} src="https://localhost:5001/Images/20220408_153919.jpg" sx={{ width: 50, height: 50 }} />
+        <Avatar alt={props.details.name} src={`https://localhost:5001/Images/${props.details.profilePic}`} sx={{ width: 50, height: 50 }} />
         <Box sx={{ width: "25%", ml: 3 }}>
-          <Typography sx={{ fontSize: 14, textAlign: "left" }} >Name : {props.details.name}</Typography>
+          <Typography sx={{ fontSize: 14, textAlign: "left" }} >Name : {props.details.name.split(' ')[0]}</Typography>
           <Typography sx={{ fontSize: 14, textAlign: "left" }} >NIC : {props.details.nic}</Typography>
         </Box>
         <Button size="small" color='success' variant='contained' sx={{ mx: 1, my: 0.7 }} onClick={acceptClickHandler} endIcon={<DoneIcon />} >Accept</Button>
@@ -74,7 +74,7 @@ const LeaveRequestCard = (props) => {
       <Modal open={openDetailsModal} onClose={() => setOpenDetailsModal(false)} >
         <Box sx={style}>
           <Box sx={{ width: "100%", ml: 8 }} >
-            <Avatar src="https://localhost:5001/Images/20220408_153919.jpg" sx={{ ml: 12, width: 80, height: 80 }} />
+            <Avatar src={`https://localhost:5001/Images/${props.details.profilePic}`} sx={{ ml: 12, width: 80, height: 80 }} />
             <Typography sx={{ mt: 1 }} >
               Name: {props.details.name}
             </Typography>

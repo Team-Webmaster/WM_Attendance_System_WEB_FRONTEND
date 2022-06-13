@@ -1,9 +1,9 @@
-import { Route, Routes, useNavigate } from 'react-router';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme, Grid, Typography } from '@mui/material';
 import LeaveManagementPage from './pages/LeaveManagementPage';
 import ReportPage from './pages/ReportPage';
 import ProfilePage from './pages/ProfilePage';
@@ -16,7 +16,7 @@ import SettingsPage from './pages/SettingsPage';
 import ContactUsPage from './pages/ContactUsPage';
 import LandingPage from './pages/LandingPage';
 import AboutUsPage from './pages/AboutUsPage';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './store/Context';
 import authService from './services/auth.service';
 
@@ -29,21 +29,36 @@ const theme = createTheme({
 });
 
 function App() {
+
   const { userData, setUserData } = useContext(UserContext);
+  const [serverErr,setServerErr] = useState(false);
   const navigate = useNavigate();
+
   const getUserData = async () => {
     const response = await authService.getCurrentUser();
-    if (response.status === 401) {
+    if(!response){
+      setServerErr(true);
+    }
+    else if (response.status === 401) {
       navigate('/login');
-    } else {
+    }else{
       setUserData(response.data);
     }
   }
+
   useEffect(() => {
     if (!userData) {
       getUserData();
     }
   }, []);
+
+  if(serverErr){
+    return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center",mt:"20%"}} >
+    <Typography color="red" sx={{fontWeight:"bold",fontSize:30}} >Ooops!!!</Typography>
+    <Typography color="red" sx={{fontWeight:"bold"}} >Server Error: Something happened in Server. Please Try again later.</Typography>
+  </Grid>
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

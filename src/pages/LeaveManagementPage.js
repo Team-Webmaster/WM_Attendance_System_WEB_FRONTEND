@@ -1,12 +1,13 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Grid, Tab, Tabs, Box } from '@mui/material';
+import { Grid, Tab, Tabs, Box, CircularProgress } from '@mui/material';
 import Footer from '../components/Footer';
 import LeaveRequestForm from '../components/LeaveRequestForm';
 import axios from 'axios';
 import LeaveApproval from '../components/LeaveApproval';
 import TabPanel from '../components/TabPanel';
 import LeaveDetails from '../components/LeaveDetails';
+import { UserContext } from '../store/Context';
 
 function a11yProps(index) {
   return {
@@ -18,6 +19,7 @@ function a11yProps(index) {
 const LeaveManagementPage = () => {
 
   const [value, setValue] = React.useState(0);
+  const {userData} = React.useContext(UserContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -26,7 +28,7 @@ const LeaveManagementPage = () => {
   const leaveRequestHandler = (leaveDetails) => {
     axios.post('https://localhost:5001/api/Request/leave-request', leaveDetails)
       .then((res) => {
-        console.log(res);
+        window.alert("Leave Request Success");
       }).catch((err) => {
         console.log(err);
       });
@@ -36,13 +38,18 @@ const LeaveManagementPage = () => {
   const shortLeaveHandler = (shortLeaveDetails) => {
     axios.post('https://localhost:5001/api/Request/short-leave-request/', shortLeaveDetails)
       .then((res) => {
-        console.log(res);
+        window.alert("Leave Request Success");
       }).catch((err) => {
         console.log(err);
       });
     console.log(Array.from(shortLeaveDetails));
   }
 
+  if(!userData){
+    return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center"}} >
+        <CircularProgress sx={{mt:"20%"}} size={50} />
+      </Grid>
+  }
 
   return (
     <React.Fragment>

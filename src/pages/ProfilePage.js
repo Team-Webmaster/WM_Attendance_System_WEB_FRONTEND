@@ -1,9 +1,19 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Grid, Typography } from '@mui/material';
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import Footer from '../components/Footer';
+import { UserContext } from '../store/Context';
 
 const ProfilePage = () => {
+
+  const {userData} = React.useContext(UserContext);
+
+  if(!userData){
+    return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center"}} >
+        <CircularProgress sx={{mt:"20%"}} size={50} />
+      </Grid>
+  }
+
   return (
     <React.Fragment>
        <Navigation/>

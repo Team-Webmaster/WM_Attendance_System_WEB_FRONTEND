@@ -1,9 +1,9 @@
 import React from 'react';
-import Navigation from '../components/Navigation';
+import SimpleNavigation from '../components/SimpleNavigation';
 
 const AboutUsPage = () => {
   return (
-    <Navigation/>
+    <SimpleNavigation/>
   )
 }
 

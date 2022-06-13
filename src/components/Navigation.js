@@ -120,7 +120,7 @@ const Navigation = () => {
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="User" src={userData && userData.profilePic} />
+                                    <Avatar alt="User" src={userData && `https://localhost:5001/Images/${userData.profilePic}`} />
                                 </IconButton>
                             </Tooltip>
                             <Menu

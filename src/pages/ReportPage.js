@@ -1,10 +1,11 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, Tab, Tabs, Typography } from '@mui/material';
 import TabPanel from '../components/TabPanel';
 import EmployeeReportForm from '../components/EmployeeReportForm';
 import SelfReportForm from '../components/SelfReportForm';
+import { UserContext } from '../store/Context';
 
 function a11yProps(index) {
   return {
@@ -16,10 +17,17 @@ function a11yProps(index) {
 const ReportPage = () => {
 
   const [value, setValue] = React.useState(0);
+  const {userData} = React.useContext(UserContext);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  if(!userData){
+    return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center"}} >
+        <CircularProgress sx={{mt:"20%"}} size={50} />
+      </Grid>
+  }
 
   return (
     <React.Fragment>

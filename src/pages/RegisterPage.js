@@ -1,20 +1,28 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import Register from '../components/Register';
 import { Grid } from '@mui/material';
 import SimpleNavigation from '../components/SimpleNavigation';
 import SimpleFooter from '../components/SimpleFooter';
+import authService from '../services/auth.service';
 
 const RegisterPage = () => {
 
-    const registrationHandler = (userData) => {
-        axios.post('https://localhost:5001/api/User/register', userData)
-            .then(res => {
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            });
+    const [emailErr,setEmailErr] = useState('');
+    const [emailErrState,setEmailErrState] = useState(false);
+    const [profilePicErr,setProfilePicErr] = useState('');
+    const [profilePicErrState,setProfilePicErrState] = useState(false);
+
+    const registrationHandler = async (userData) => {
+        const response = await authService.register(userData);
+        if(response.status===400){
+            setEmailErrState(true);
+            setEmailErr(response.data.message);
+        }else if(response.status===200){
+            setProfilePicErrState(true);
+            setProfilePicErr(response.data.message);
+        }else if(response.status===201){
+            window.alert("Register success.");
+        }
     }
 
     return (
@@ -42,7 +50,13 @@ const RegisterPage = () => {
                     sm={8}
                     md={5}
                     lg={6}            >
-                    <Register registrationFormHandler={registrationHandler} />
+                    <Register 
+                        registrationFormHandler={registrationHandler} 
+                        emailErr={emailErr}
+                        emailErrState={emailErrState}
+                        profilePicErr={profilePicErr}
+                        profilePicErrState={profilePicErrState}
+                    />
                 </Grid>
             </Grid>
             <SimpleFooter/>

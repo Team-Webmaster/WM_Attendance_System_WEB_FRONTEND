@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Grid, Button, Typography, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
-import { dayDifference, hourDifference, minuteDifference } from '../functions/timeDifference';
+import { dayDifference, hourDifference, minuteDifference, numOfSundays } from '../functions/timeDifference';
 import { UserContext } from '../store/Context';
 
 const leaveTypes = [{ id: 1, type: 'Sick Leave' }, { id: 2, type: 'Normal Leave' }, { id: 3, type: 'Day off' }];
@@ -22,7 +22,7 @@ const LeaveRequestForm = (props) => {
         setStartTime('');
         setEndTime('');
     },[durationType]);
-
+ 
     const submitHandler = (event) => {
         event.preventDefault();
         const formData = new FormData(document.getElementById('leaveRequestForm'));
@@ -37,7 +37,7 @@ const LeaveRequestForm = (props) => {
         } else if (durationType.match('Full Day')) {
             formData.append('duration', 1);
         } else {
-            const days = dayDifference(startDate,endDate,false)+1;
+            const days = dayDifference(startDate,endDate,false)+1-numOfSundays(startDate,endDate);
             formData.append('duration', days);
         }
         props.submitFormHandler(formData);
@@ -61,7 +61,7 @@ const LeaveRequestForm = (props) => {
                 <Typography sx={{ color: "green" }}>
                     {`${leaveTypes.filter(leave=>leave.id===leaveTypeId)[0].type} from ${startDate} to ${endDate}`}
                 </Typography>
-                <Typography sx={{ color: "green" }}>{`${dayDifference(startDate,endDate,true)+1} Days`}</Typography>
+                <Typography sx={{ color: "green" }}>{`${dayDifference(startDate,endDate,true)+1-numOfSundays(startDate,endDate)} Days`}</Typography>
             </React.Fragment>
     } else if (durationType.match('Few Hours') && startDate && startTime && endTime) {
         completeDetails = minuteDifference(new Date(startDate+"T"+startTime),new Date(startDate+"T"+endTime),true) <= 0?
