@@ -2,14 +2,29 @@ import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import { dayDifference } from '../functions/timeDifference';
+import { UserContext } from '../store/Context';
 
 const reportTypes = ['Performance Report', 'Attendee Report', 'Leave Master'];
 
-const SelfReportForm = () => {
+const SelfReportForm = (props) => {
 
     const [reportType, setReportType] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+    const {userData} = React.useContext(UserContext);
+
+    const submitHandler = (event)=>{
+        event.preventDefault();
+        const reportData = {
+            uId:userData.userId,
+            requesterId:userData.userId,
+            startDate:startDate,
+            endDate:endDate,
+            type:reportType
+        }
+        console.log(reportData);
+        props.submitReportFormHandler(reportData);
+    };
 
     let completeMsg;
 
@@ -23,7 +38,7 @@ const SelfReportForm = () => {
         <Box
             id="reportsForm"
             component="form"
-            // onSubmit={submitHandler}
+            onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {

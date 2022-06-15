@@ -1,22 +1,26 @@
 import React from "react";
-// import "./styles.css";
-
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from '@fullcalendar/interaction'
-// import timeGridPlugin from "@fullcalendar/timegrid";
+import { UserContext } from "../store/Context";
+import useFetch from "../hooks/useFetch";
+import { CircularProgress } from "@mui/material";
+import { getCalendarEvents } from "../functions/calendarEvents";
 
-// import "@fullcalendar/core/main.css";
-// import "@fullcalendar/daygrid/main.css";
-// import "@fullcalendar/timegrid/main.css";
-
-import events from "./events";
 
 const clickDateHandler = (arg)=>{
   console.log(arg);
 }
 
 const Calendar = ()=>{
+
+  const {userData} = React.useContext(UserContext);
+  const {data} = useFetch(`https://localhost:5001/api/Calendar/userId?userId=${userData.userId}`);
+
+  if(!data){
+    return <CircularProgress color="inherit" />
+  };
+
   return (
     <React.Fragment>
       <FullCalendar
@@ -29,7 +33,7 @@ const Calendar = ()=>{
           right: "prev,next",
         }}
         plugins={[dayGridPlugin, interactionPlugin]}
-        events={events}
+        events={getCalendarEvents(data)}
         displayEventEnd="true"
         eventColor="purple"
         dateClick={clickDateHandler}
@@ -37,6 +41,6 @@ const Calendar = ()=>{
       />
     </React.Fragment>
   );
-}
+};
 
 export default Calendar;
