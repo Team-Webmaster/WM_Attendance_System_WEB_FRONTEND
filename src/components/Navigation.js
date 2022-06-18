@@ -22,7 +22,7 @@ import { useNavigate } from 'react-router-dom';
 
 const pages = ['Home', 'About Us'];
 const paths = ['/home', '/about-us'];
-const settings = ['Profile', 'Account', 'Dashboard'];
+const settings = ['Account', 'Dashboard'];
 
 const Navigation = () => {
 
@@ -139,6 +139,9 @@ const Navigation = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
+                                <MenuItem key='Profile' onClick={()=>navigate('/profile')}>
+                                    <Typography textAlign="center">Profile</Typography>
+                                </MenuItem>
                                 {settings.map((setting) => (
                                     <MenuItem key={setting} onClick={handleCloseUserMenu}>
                                         <Typography textAlign="center">{setting}</Typography>

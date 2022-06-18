@@ -1,0 +1,57 @@
+import React from 'react';
+import { UserContext } from '../store/Context';
+import { Typography, Box, Grid, Avatar, Button, Modal, Divider } from '@mui/material';
+import EditProfileForm from './EditProfileForm';
+import EmailIcon from '@mui/icons-material/Email';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
+
+const ProfileCard = () => {
+    const { userData } = React.useContext(UserContext);
+    const [flag, setFlag] = React.useState(false);
+
+    return (
+        <Box sx={{ boxShadow: 10, p: 2, mt: 2, width: 'auto', maxWidth: "400px", textAlign: "center" }}>
+            <Grid container spacing={2} sx={{ alignItems: "center", justifyContent: "center", direction: "column" }} >
+                <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex' }} >
+                    <Avatar src={`https://localhost:5001/Images/${userData.profilePic}`} sx={{ width: 150, height: 150 }} />
+                </Grid>
+                <Grid item xs={12}>
+                    <Typography variant="h5" >{`${userData.name} | ${userData.type === 2 ? "Employee" : userData.type === 1 ? "Manager" : "Admin"}`}</Typography>
+                    <Grid mt={2} >
+                        <Divider />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} mt={1} width={200} >
+                    <Grid item xs={12} display="flex" >
+                        <EmailIcon />
+                        <Typography ml={1} >{`${userData.email}`}</Typography>
+                    </Grid>
+                    <Grid item xs={12} display="flex" >
+                        <CreditCardIcon />
+                        <Typography ml={1} >{`${userData.nic}`}</Typography>
+                    </Grid>
+                    <Grid item xs={12} display="flex" >
+                        <LocationOnIcon />
+                        <Typography ml={1} >{`${userData.address}`}</Typography>
+                    </Grid>
+                    <Grid item xs={12} display="flex" >
+                        <PhoneAndroidIcon />
+                        <Typography ml={1} >{`${userData.telephone}`}</Typography>
+                    </Grid>
+                </Grid>
+                <Grid item xs={12} sx={{ justifyContent: 'right', display: 'flex' }} >
+                    <Button onClick={() => setFlag(true)} variant="outlined" color="secondary" >Update Profile</Button>
+                </Grid>
+            </Grid>
+            <Modal open={flag} onClose={() => setFlag(false)} >
+                <Box>
+                    <EditProfileForm onSaveChanges={() => setFlag(false)} />
+                </Box>
+            </Modal>
+        </Box>
+    )
+};
+
+export default ProfileCard;
