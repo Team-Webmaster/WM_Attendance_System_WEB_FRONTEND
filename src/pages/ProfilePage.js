@@ -1,15 +1,14 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Button, CircularProgress, Grid, Modal, Typography } from '@mui/material';
+import { CircularProgress, Grid, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import { UserContext } from '../store/Context';
-import { Box } from '@mui/system';
-import EditProfileForm from '../components/EditProfileForm';
+import ProfileCard from '../components/ProfileCard';
+
 
 const ProfilePage = () => {
 
   const { userData } = React.useContext(UserContext);
-  const [flag, setFlag] = React.useState(false);
 
   if (!userData) {
     return <Grid component="main" sx={{ width: "100%", height: "100vh", textAlign: "center" }} >
@@ -46,13 +45,10 @@ const ProfilePage = () => {
         >
           <Typography variant='h4' sx={{ fontWeight: "bold" }} >Profile</Typography>
           <Typography>The place to manage all of your details...</Typography>
-          <Button onClick={() => setFlag(true)} >Update Profile</Button>
+          <Grid sx={{justifyContent:'center',display:'flex'}} >
+          <ProfileCard/>
+          </Grid>
         </Grid>
-        <Modal open={flag} onClose={() => setFlag(false)} >
-          <Box>
-            <EditProfileForm />
-          </Box>
-        </Modal>
       </Grid>
       <Footer />
     </React.Fragment>

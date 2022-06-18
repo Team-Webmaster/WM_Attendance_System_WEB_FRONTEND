@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
-import { Box, Button, Divider, Grid, Typography, Autocomplete } from '@mui/material';
+import React from 'react';
+import { Box, Button, Grid, Modal, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
+import UpdateIcon from '@mui/icons-material/Update';
+import ChangePasswordForm from './ChangePasswordForm';
 
 const style = {
     position: 'absolute',
@@ -14,22 +16,26 @@ const style = {
     border: '2px solid #000',
     boxShadow: 24,
     p: 4,
+    textAlign: 'center'
 };
 
-const EditProfileForm = () => {
+const EditProfileForm = (props) => {
 
-    const { userData } = React.useContext(UserContext);
-    const [user, setUser] = React.useState(userData);
-
-    useEffect(() => {
-        setUser(userData);
-    }, [userData]);
+    const { userData, setUserData } = React.useContext(UserContext);
+    const [user,setUser] = React.useState(userData);
+    const [flag, setFlag] = React.useState(false);
 
     const submitHandler = (event) => {
         event.preventDefault();
         axios.put(`https://localhost:5001/api/User/${userData.userId}`, user)
-            .then(res => alert('Profile updated.'))
-            .then(err => alert('Profile update failed.'));
+            .then(res => {
+                setUserData(user);
+                props.onSaveChanges();
+                alert('Profile updated.')
+            }).catch(err => {
+                props.onSaveChanges();
+                alert('Profile update failed.')
+            });
     }
 
     const handleChange = (event) => {
@@ -47,6 +53,7 @@ const EditProfileForm = () => {
             sx={style}
             maxWidth="450px"
         >
+            <UpdateIcon color="primary" sx={{ fontSize: 40 }} />
             <Typography
                 variant="h5"
                 mb={2}
@@ -86,12 +93,12 @@ const EditProfileForm = () => {
                         value={user.email}
                         fullWidth
                         required
-                        disabled
+                        disabled={!(user.type === 0)}
                     />
                 </Grid>
                 <Grid
                     item
-                    xs={12}
+                    xs={7}
                 >
                     <TextField
                         id="outlined-password"
@@ -104,6 +111,12 @@ const EditProfileForm = () => {
                         required
                         disabled
                     />
+                </Grid>
+                <Grid
+                    item
+                    xs={5}
+                >
+                    <Button size="small" variant='contained' sx={{ mt: 0.5, ml: 1 }} onClick={()=>setFlag(true)} >Change Password</Button>
                 </Grid>
                 <Grid
                     item
@@ -160,6 +173,11 @@ const EditProfileForm = () => {
                     <Button type="submit" variant="contained" size="large" >Save Changes</Button>
                 </Grid>
             </Grid>}
+            <Modal open={flag} onClose={() => setFlag(false)} >
+                <Box>
+                    <ChangePasswordForm/>
+                </Box>
+            </Modal>
         </Box>
     )
 };

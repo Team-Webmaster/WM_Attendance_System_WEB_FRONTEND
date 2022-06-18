@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
+import { UserContext } from '../store/Context';
 
 const style = {
     position: 'absolute',
@@ -14,6 +15,9 @@ const style = {
 };
 
 const PendingRecordsTable = (props) => {
+
+    const {userData} = React.useContext(UserContext);
+
   return (
     <TableContainer component={Paper} sx={style} >
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -32,7 +36,7 @@ const PendingRecordsTable = (props) => {
                         </TableHead>
                         <TableBody>
                             {
-                                props.pendingDetails.pendingLeaves.map((leave) => {
+                                props.pendingDetails.pendingLeaves.filter(leave=>leave.nic===userData.nic).map((leave) => {
                                     return <TableRow key={leave.id} >
                                         <TableCell component="th" scope="row">
                                             {leave.date.slice(0, 10)}
@@ -58,7 +62,7 @@ const PendingRecordsTable = (props) => {
                         </TableHead>
                         <TableBody>
                             {
-                                props.pendingDetails.pendingShortLeaves.map((leave) => {
+                                props.pendingDetails.pendingShortLeaves.filter(leave=>leave.nic===userData.nic).map((leave) => {
                                     return <TableRow key={leave.id} >
                                         <TableCell component="th" scope="row">
                                             {leave.date.slice(0, 10)}

@@ -68,7 +68,7 @@ const LeaveDetails = () => {
                 </Fade>
                 <Fade in={true} timeout={4000} >
                     <Button
-                        endIcon={<Badge badgeContent={pendingDetails.pendingLeaves.length + pendingDetails.pendingShortLeaves.length} color='error' ><PendingTwoToneIcon /></Badge>}
+                        endIcon={<Badge badgeContent={pendingDetails.pendingLeaves.filter(leave=>leave.nic===userData.nic).length + pendingDetails.pendingShortLeaves.filter(leave=>leave.nic===userData.nic).length} color='error' ><PendingTwoToneIcon /></Badge>}
                         size="medium"
                         variant='outlined'
                         color='warning'
