@@ -4,6 +4,7 @@ import { Grid } from '@mui/material';
 import SimpleNavigation from '../components/SimpleNavigation';
 import SimpleFooter from '../components/SimpleFooter';
 import authService from '../services/auth.service';
+import { toast, ToastContainer } from 'react-toastify';
 
 const RegisterPage = () => {
 
@@ -21,13 +22,14 @@ const RegisterPage = () => {
             setProfilePicErrState(true);
             setProfilePicErr(response.data.message);
         }else if(response.status===201){
-            window.alert("Register success.");
+            toast.success('Registration successfully completed. Please check your emails for verification.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
         }
     }
 
     return (
         <React.Fragment>
             <SimpleNavigation/>
+            <ToastContainer/>
             <Grid container component="main" sx={{ height: "auto", p: 5,mt:10 }}>
                 <Grid
                     item

@@ -11,16 +11,16 @@ const SelfReportForm = (props) => {
     const [reportType, setReportType] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
-    const {userData} = React.useContext(UserContext);
+    const { userData } = React.useContext(UserContext);
 
-    const submitHandler = (event)=>{
+    const submitHandler = (event) => {
         event.preventDefault();
         const reportData = {
-            uId:userData.userId,
-            requesterId:userData.userId,
-            startDate:startDate,
-            endDate:endDate,
-            type:reportType
+            uId: userData.userId,
+            requesterId: userData.userId,
+            startDate: startDate,
+            endDate: endDate,
+            type: reportType
         }
         console.log(reportData);
         props.submitReportFormHandler(reportData);
@@ -63,7 +63,7 @@ const SelfReportForm = (props) => {
                     <Typography
                         variant="h5"
                     >
-                        Self Reports
+                        {userData.type === 2 ? 'Reports' : 'Self Reports'}
                     </Typography>
                 </Grid>
                 <Grid

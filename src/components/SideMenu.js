@@ -12,17 +12,25 @@ import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import SendIcon from '@mui/icons-material/Send';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { UserContext } from '../store/Context';
 
 const employeeMenuItems = ['Home', 'Leave Management', 'Report', 'Profile', 'Calendar', 'Statistics', 'Video Conference'];
 const managerMenuItems = ['Working Status Board', 'Send Notification'];
 const adminMenuItems = ['Settings'];
-const paths = ['/home','/leave-management','/report','/profile','/calendar','/statistics','/video-conference','/working-status-board','/send-notification','/settings'];
+const paths = ['/home', '/leave-management', '/report', '/profile', '/calendar', '/statistics', '/video-conference', '/working-status-board', '/send-notification', '/settings'];
 
 const SideMenu = (props) => {
 
     const location = useLocation();
-    const menuItems = [...employeeMenuItems, ...managerMenuItems, ...adminMenuItems];
-
+    const { userData } = React.useContext(UserContext);
+    let menuItems;
+    if (userData.type === 0) {
+        menuItems = [...employeeMenuItems, ...managerMenuItems, ...adminMenuItems];
+    } else if (userData.type === 1) {
+        menuItems = [...employeeMenuItems, ...managerMenuItems];
+    } else {
+        menuItems = [...employeeMenuItems];
+    }
     return (
         <Box
             sx={{ width: 300 }}
@@ -39,7 +47,7 @@ const SideMenu = (props) => {
             <Divider />
             <List>
                 {menuItems.map((text, index) => (
-                    <ListItem button key={text} component={RouterLink} to={paths[index]} selected={paths[index]===location.pathname} >
+                    <ListItem button key={text} component={RouterLink} to={paths[index]} selected={paths[index] === location.pathname} >
                         <ListItemIcon>
                             {index === 0 ? <HomeIcon /> :
                                 index === 1 ? <TimeToLeaveIcon /> :
@@ -55,7 +63,7 @@ const SideMenu = (props) => {
                         <ListItemText primary={text} />
                     </ListItem>
                 ))}
-                <ListItem button key='Contact Us' component={RouterLink} to='/contact-us' selected={'/contact-us'===location.pathname} >
+                <ListItem button key='Contact Us' component={RouterLink} to='/contact-us' selected={'/contact-us' === location.pathname} >
                     <ListItemIcon><PhonePausedIcon /></ListItemIcon>
                     <ListItemText primary='Contact Us' />
                 </ListItem>

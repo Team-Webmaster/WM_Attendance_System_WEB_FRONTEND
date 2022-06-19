@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Box, Container, Grid, Typography, Button, ButtonGroup } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { UserContext } from '../store/Context';
 
 const employeeSolutionItems = ['Leave Management', 'Report', 'Profile', 'Calendar', 'Statistics', 'Video Conference'];
 const managerSolutionItems = ['Working Status Board', 'Send Notification'];
@@ -9,7 +10,15 @@ const paths = ['/leave-management', '/report', '/profile', '/calendar', '/statis
 
 const Footer = () => {
 
-    const solutionItems = [...employeeSolutionItems, ...managerSolutionItems, ...adminSolutionItems];
+    const { userData } = React.useContext(UserContext);
+    let solutionItems;
+    if (userData.type === 0) {
+        solutionItems = [...employeeSolutionItems, ...managerSolutionItems, ...adminSolutionItems];
+    } else if (userData.type === 1) {
+        solutionItems = [...employeeSolutionItems, ...managerSolutionItems];
+    } else {
+        solutionItems = [...employeeSolutionItems];
+    }
 
     return (
         <footer>

@@ -21,7 +21,7 @@ const ProfileCard = (props) => {
                         <Divider />
                     </Grid>
                 </Grid>
-                <Grid container spacing={2} mt={1} width={200} >
+                <Grid container spacing={2} mt={1} width={300} >
                     <Grid item xs={12} display="flex" >
                         <EmailIcon />
                         <Typography ml={1} >{`${userData.email}`}</Typography>

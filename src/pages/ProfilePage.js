@@ -1,6 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Box, CircularProgress, Grid, Modal, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, Grid, Modal, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import { UserContext } from '../store/Context';
 import ProfileCard from '../components/ProfileCard';
@@ -53,17 +53,18 @@ const ProfilePage = () => {
           <Typography variant='h4' sx={{ fontWeight: "bold" }} >Profile</Typography>
           <Typography>The place to manage all of your details...</Typography>
           <Grid sx={{ justifyContent: 'center', display: 'flex' }} >
-            <ProfileCard onClickUpdate={()=>setFlag1(true)} />
+            {userData.type===0&&<Button >Visit Profiles</Button>}
+            <ProfileCard onClickUpdate={() => setFlag1(true)} />
           </Grid>
         </Grid>
         <Modal open={flag1} onClose={() => setFlag1(false)} >
           <Box>
-            <EditProfileForm onClickChangePassword={()=>setFlag2(true)} onSaveChanges={() => setFlag1(false)} />
+            <EditProfileForm onClickChangePassword={() => setFlag2(true)} onSaveChanges={() => setFlag1(false)} />
           </Box>
         </Modal>
         <Modal open={flag2} onClose={() => setFlag2(false)} >
           <Box>
-            <ChangePasswordForm closePasswordForm={()=>setFlag2(false)} />
+            <ChangePasswordForm closePasswordForm={() => setFlag2(false)} />
           </Box>
         </Modal>
       </Grid>
