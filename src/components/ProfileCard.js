@@ -1,15 +1,13 @@
 import React from 'react';
 import { UserContext } from '../store/Context';
-import { Typography, Box, Grid, Avatar, Button, Modal, Divider } from '@mui/material';
-import EditProfileForm from './EditProfileForm';
+import { Typography, Box, Grid, Avatar, Button, Divider } from '@mui/material';
 import EmailIcon from '@mui/icons-material/Email';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 
-const ProfileCard = () => {
+const ProfileCard = (props) => {
     const { userData } = React.useContext(UserContext);
-    const [flag, setFlag] = React.useState(false);
 
     return (
         <Box sx={{ boxShadow: 10, p: 2, mt: 2, width: 'auto', maxWidth: "400px", textAlign: "center" }}>
@@ -42,14 +40,9 @@ const ProfileCard = () => {
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sx={{ justifyContent: 'right', display: 'flex' }} >
-                    <Button onClick={() => setFlag(true)} variant="outlined" color="secondary" >Update Profile</Button>
+                    <Button onClick={props.onClickUpdate} variant="outlined" color="secondary" >Update Profile</Button>
                 </Grid>
             </Grid>
-            <Modal open={flag} onClose={() => setFlag(false)} >
-                <Box>
-                    <EditProfileForm onSaveChanges={() => setFlag(false)} />
-                </Box>
-            </Modal>
         </Box>
     )
 };
