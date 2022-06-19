@@ -10,6 +10,7 @@ import HomePage from '../pages/HomePage';
 import LandingPage from '../pages/LandingPage';
 import LeaveManagementPage from '../pages/LeaveManagementPage';
 import LoginPage from '../pages/LoginPage';
+import Dashboard from '../pages/Dashboard';
 import ProfilePage from '../pages/ProfilePage';
 import RegisterPage from '../pages/RegisterPage';
 import ReportPage from '../pages/ReportPage';
@@ -29,6 +30,7 @@ const PrivateRoutes = (props) => {
       <Route path='/working-status-board' element={<WorkingStatusBoardPage />} />
       <Route path='/send-notification' element={<SendNotificationPage />} />
       <Route path='/settings' element={<SettingsPage />} />
+      <Route path='/dashboard' element={<Dashboard />} />
     </React.Fragment>;
   } else if (props.userType === 1) {
     routes = <React.Fragment>
@@ -37,16 +39,16 @@ const PrivateRoutes = (props) => {
       <Route path='/statistics' element={<StatisticsPage />} />
       <Route path='/working-status-board' element={<WorkingStatusBoardPage />} />
       <Route path='/send-notification' element={<SendNotificationPage />} />
-    </React.Fragment>
+    </React.Fragment>;
   } else {
     routes = <React.Fragment>
       <Route path='/leave-management' element={<EmployeeLeaveRequestPage/>} />
       <Route path='/report' element={<EmployeeReportsPage />} />
       <Route path='/statistics' element={<EmployeeStatisticsPage />} />
-    </React.Fragment>
+    </React.Fragment>;
   }
   return (
-    <div>
+    <React.Fragment>
       <Routes>
         <Route path='/' element={<LandingPage />} />
         <Route path='/login' element={<LoginPage />} />
@@ -58,10 +60,10 @@ const PrivateRoutes = (props) => {
         <Route path='/contact-us' element={<ContactUsPage />} />
         <Route path='/about-us' element={<AboutUsPage />} />
         {
-          routes?routes:null
+          routes
         }
       </Routes>
-    </div>
+    </React.Fragment>
   )
 }
 

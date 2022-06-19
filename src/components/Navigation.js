@@ -22,7 +22,6 @@ import { useNavigate } from 'react-router-dom';
 
 const pages = ['Home', 'About Us'];
 const paths = ['/home', '/about-us'];
-const settings = ['Account', 'Dashboard'];
 
 const Navigation = () => {
 
@@ -51,7 +50,7 @@ const Navigation = () => {
         setIsMenu(false);
     };
 
-    const handleClickLogOut = ()=>{
+    const handleClickLogOut = () => {
         authService.logout();
         navigate('/login');
         setUserData(null);
@@ -139,14 +138,12 @@ const Navigation = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                <MenuItem key='Profile' onClick={()=>navigate('/profile')}>
+                                <MenuItem key='Profile' onClick={() => navigate('/profile')}>
                                     <Typography textAlign="center">Profile</Typography>
                                 </MenuItem>
-                                {settings.map((setting) => (
-                                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting}</Typography>
-                                    </MenuItem>
-                                ))}
+                                <MenuItem key='Dashboard' onClick={()=>navigate('/dashboard')}>
+                                    <Typography textAlign="center">Dashboard</Typography>
+                                </MenuItem>
                                 <MenuItem key='Log out' onClick={handleClickLogOut}>
                                     <Typography textAlign="center">Log out</Typography>
                                 </MenuItem>
