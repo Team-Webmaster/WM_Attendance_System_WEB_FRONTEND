@@ -3,6 +3,7 @@ import { Box, Button, Checkbox, FormControlLabel, Grid, Typography } from '@mui/
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
@@ -40,8 +41,11 @@ const ChangePasswordForm = () => {
         setPasswordNotMatch(false);
         const {confirmNewPassword,...changePasswordData} = input;
         axios.put(`https://localhost:5001/api/User/change-password/${userData.userId}`,changePasswordData)
-            .then(res=>alert('Password Changed.'))
-            .catch(err=>alert('Password change failed.'));
+            .then(res => {
+                toast.success('Password Changed.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
+            }).catch(err => {
+                toast.error('Password Change failed.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
+            });
     };
 
     return (

@@ -5,16 +5,17 @@ import { CircularProgress, Grid, Typography } from '@mui/material';
 import VideoConferenceForm from '../components/VideoConferenceForm';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const scheduleConferenceHandler = (confData)=>{
   console.log(confData);
   axios.post('https://localhost:5001/api/VideoConference',confData)
     .then((res)=>{
-      console.log(res);
+      toast.success('Video conference scheduled successfully completed. Check your emails.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
+    }).catch((err)=>{
+      toast.error('Video conference schedule failed. Try again shortly.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
     })
-    .catch((err)=>{
-      console.log(err);
-    });
 }
 
 const VideoConferencePage = () => {
@@ -30,6 +31,7 @@ const VideoConferencePage = () => {
   return (
     <React.Fragment>
        <Navigation/>
+       <ToastContainer/>
       <Grid container component="main" sx={{ height: "100vh", p: 5, mt:5 }}>
         <Grid
           item

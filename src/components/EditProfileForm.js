@@ -5,6 +5,7 @@ import axios from 'axios';
 import { UserContext } from '../store/Context';
 import UpdateIcon from '@mui/icons-material/Update';
 import ChangePasswordForm from './ChangePasswordForm';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
@@ -31,10 +32,10 @@ const EditProfileForm = (props) => {
             .then(res => {
                 setUserData(user);
                 props.onSaveChanges();
-                alert('Profile updated.')
+                toast.success('Profile updated.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
             }).catch(err => {
                 props.onSaveChanges();
-                alert('Profile update failed.')
+                toast.error('Profile update failed.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
             });
     }
 
@@ -116,7 +117,7 @@ const EditProfileForm = (props) => {
                     item
                     xs={5}
                 >
-                    <Button size="small" variant='contained' sx={{ mt: 0.5, ml: 1 }} onClick={()=>setFlag(true)} >Change Password</Button>
+                    <Button size="small" variant='contained' sx={{ mt: 0.5, ml: 1 }} onClick={()=>{setFlag(true);}} >Change Password</Button>
                 </Grid>
                 <Grid
                     item

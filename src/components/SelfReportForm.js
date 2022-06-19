@@ -79,6 +79,7 @@ const SelfReportForm = (props) => {
                             name="reportType"
                             value={reportType}
                             onChange={(event) => setReportType(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -115,6 +116,7 @@ const SelfReportForm = (props) => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
+                        required
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
                     <TextField
@@ -128,6 +130,7 @@ const SelfReportForm = (props) => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
+                        required
                     />
                 </Grid>
                 <Grid

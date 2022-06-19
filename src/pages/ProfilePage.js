@@ -4,6 +4,8 @@ import { CircularProgress, Grid, Typography } from '@mui/material';
 import Footer from '../components/Footer';
 import { UserContext } from '../store/Context';
 import ProfileCard from '../components/ProfileCard';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const ProfilePage = () => {
@@ -19,6 +21,7 @@ const ProfilePage = () => {
   return (
     <React.Fragment>
       <Navigation />
+      <ToastContainer/>
       <Grid container component="main" sx={{ height: "100vh", p: 5, mt: 5 }}>
         <Grid
           item
