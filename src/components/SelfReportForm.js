@@ -11,16 +11,16 @@ const SelfReportForm = (props) => {
     const [reportType, setReportType] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
-    const {userData} = React.useContext(UserContext);
+    const { userData } = React.useContext(UserContext);
 
-    const submitHandler = (event)=>{
+    const submitHandler = (event) => {
         event.preventDefault();
         const reportData = {
-            uId:userData.userId,
-            requesterId:userData.userId,
-            startDate:startDate,
-            endDate:endDate,
-            type:reportType
+            uId: userData.userId,
+            requesterId: userData.userId,
+            startDate: startDate,
+            endDate: endDate,
+            type: reportType
         }
         console.log(reportData);
         props.submitReportFormHandler(reportData);
@@ -63,7 +63,7 @@ const SelfReportForm = (props) => {
                     <Typography
                         variant="h5"
                     >
-                        Self Reports
+                        {userData.type === 2 ? 'Reports' : 'Self Reports'}
                     </Typography>
                 </Grid>
                 <Grid
@@ -79,6 +79,7 @@ const SelfReportForm = (props) => {
                             name="reportType"
                             value={reportType}
                             onChange={(event) => setReportType(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -115,6 +116,7 @@ const SelfReportForm = (props) => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
+                        required
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
                     <TextField
@@ -128,6 +130,7 @@ const SelfReportForm = (props) => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
+                        required
                     />
                 </Grid>
                 <Grid

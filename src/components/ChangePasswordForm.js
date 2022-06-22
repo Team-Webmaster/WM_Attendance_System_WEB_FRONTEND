@@ -3,6 +3,7 @@ import { Box, Button, Checkbox, FormControlLabel, Grid, Typography } from '@mui/
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
@@ -17,31 +18,43 @@ const style = {
     textAlign: 'center'
 };
 
-const ChangePasswordForm = () => {
+const ChangePasswordForm = (props) => {
 
-    const {userData} = React.useContext(UserContext);
-    const [input,setInput] = React.useState({currentPassword:'',newPassword:'',confirmNewPassword:''});
-    const [showPasswords,setShowPasswords] = React.useState(false);
-    const [passwordNotMatch,setPasswordNotMatch] = React.useState(false);
+    const { userData } = React.useContext(UserContext);
+    const [input, setInput] = React.useState({ currentPassword: '', newPassword: '', confirmNewPassword: '' });
+    const [showPasswords, setShowPasswords] = React.useState(false);
+    const [passwordNotMatch, setPasswordNotMatch] = React.useState(false);
+    const [isOldPasswordIncorrect,setIsOldPasswordIncorrect] = React.useState('');
 
-    const handleChange = (event)=>{
+    const handleChange = (event) => {
         setInput({
             ...input,
-            [event.target.name]:event.target.value
+            [event.target.name]: event.target.value
         });
     }
 
-    const submitHandler = (event)=>{
+    const submitHandler = (event) => {
         event.preventDefault();
-        if(input.newPassword!==input.confirmNewPassword){
+        if (input.newPassword !== input.confirmNewPassword) {
+            setIsOldPasswordIncorrect('');
             setPasswordNotMatch(true);
             return;
         }
         setPasswordNotMatch(false);
-        const {confirmNewPassword,...changePasswordData} = input;
-        axios.put(`https://localhost:5001/api/User/change-password/${userData.userId}`,changePasswordData)
-            .then(res=>alert('Password Changed.'))
-            .catch(err=>alert('Password change failed.'));
+        const { confirmNewPassword, ...changePasswordData } = input;
+        axios.put(`https://localhost:5001/api/User/change-password/${userData.userId}`, changePasswordData)
+            .then(res => {
+                props.closePasswordForm();
+                toast.success(res.data.message, { position: toast.POSITION.TOP_CENTER, autoClose: 4000 });
+            }).catch(err => {
+                if (err.response.status === 400) {
+                    setIsOldPasswordIncorrect(err.response.data.message);
+                } else {
+                    props.closePasswordForm();
+                    setIsOldPasswordIncorrect('');
+                    toast.error('Password Change failed.', { position: toast.POSITION.TOP_CENTER, autoClose: 4000 });
+                }
+            });
     };
 
     return (
@@ -67,12 +80,14 @@ const ChangePasswordForm = () => {
                     xs={12}
                 >
                     <TextField
+                        error={!!isOldPasswordIncorrect}
                         id="outlinedName"
                         label="Current Password"
                         size="small"
-                        type={showPasswords?"text":"password"}
+                        type={showPasswords ? "text" : "password"}
                         name="currentPassword"
                         fullWidth
+                        helperText={(!!isOldPasswordIncorrect)&&isOldPasswordIncorrect}
                         value={input.currentPassword}
                         onChange={handleChange}
                         required
@@ -86,7 +101,7 @@ const ChangePasswordForm = () => {
                         error={passwordNotMatch}
                         id="outlined-email"
                         label="New Password"
-                        type={showPasswords?"text":"password"}
+                        type={showPasswords ? "text" : "password"}
                         size="small"
                         name="newPassword"
                         value={input.newPassword}
@@ -103,10 +118,10 @@ const ChangePasswordForm = () => {
                         error={passwordNotMatch}
                         id="outlined-email"
                         label="Confirm New Password"
-                        type={showPasswords?"text":"password"}
+                        type={showPasswords ? "text" : "password"}
                         size="small"
                         name="confirmNewPassword"
-                        helperText={passwordNotMatch&&"Password must same as new paasword"}
+                        helperText={passwordNotMatch && "Password must same as new paasword"}
                         value={input.confirmNewPassword}
                         onChange={handleChange}
                         fullWidth
@@ -117,7 +132,7 @@ const ChangePasswordForm = () => {
                     item
                     xs={12}
                 >
-                    <FormControlLabel  control={<Checkbox onChange={(event)=>setShowPasswords(event.target.checked)} />} label="Show Password" />
+                    <FormControlLabel control={<Checkbox onChange={(event) => setShowPasswords(event.target.checked)} />} label="Show Password" />
                 </Grid>
                 <Grid
                     item

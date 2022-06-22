@@ -7,6 +7,8 @@ import EmployeeReportForm from '../components/EmployeeReportForm';
 import SelfReportForm from '../components/SelfReportForm';
 import { UserContext } from '../store/Context';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function a11yProps(index) {
   return {
@@ -18,9 +20,10 @@ function a11yProps(index) {
 const generateReports = (reportData)=>{
   axios.post('https://localhost:5001/api/Report/generate-report',reportData)
     .then((res)=>{
-      console.log(res);
+      toast.success('Report generated successfully completed. Check your emails.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
     }).catch((err)=>{
-      console.log(err);
+      console.log(err.response);
+      toast.error('Report generate failed. Try again shortly.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
     })
 }
 
@@ -42,6 +45,7 @@ const ReportPage = () => {
   return (
     <React.Fragment>
        <Navigation/>
+       <ToastContainer/>
       <Grid container component="main" sx={{ height: "100vh", p: 5, mt:5 }}>
         <Grid
           item

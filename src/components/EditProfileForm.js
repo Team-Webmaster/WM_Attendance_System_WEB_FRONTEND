@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Button, Grid, Modal, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
 import UpdateIcon from '@mui/icons-material/Update';
-import ChangePasswordForm from './ChangePasswordForm';
+import { toast } from 'react-toastify';
 
 const style = {
     position: 'absolute',
@@ -23,7 +23,6 @@ const EditProfileForm = (props) => {
 
     const { userData, setUserData } = React.useContext(UserContext);
     const [user,setUser] = React.useState(userData);
-    const [flag, setFlag] = React.useState(false);
 
     const submitHandler = (event) => {
         event.preventDefault();
@@ -31,10 +30,10 @@ const EditProfileForm = (props) => {
             .then(res => {
                 setUserData(user);
                 props.onSaveChanges();
-                alert('Profile updated.')
+                toast.success('Profile updated.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
             }).catch(err => {
                 props.onSaveChanges();
-                alert('Profile update failed.')
+                toast.error('Profile update failed.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
             });
     }
 
@@ -116,7 +115,7 @@ const EditProfileForm = (props) => {
                     item
                     xs={5}
                 >
-                    <Button size="small" variant='contained' sx={{ mt: 0.5, ml: 1 }} onClick={()=>setFlag(true)} >Change Password</Button>
+                    <Button size="small" variant='contained' sx={{ mt: 0.5, ml: 1 }} onClick={props.onClickChangePassword} >Change Password</Button>
                 </Grid>
                 <Grid
                     item
@@ -173,11 +172,6 @@ const EditProfileForm = (props) => {
                     <Button type="submit" variant="contained" size="large" >Save Changes</Button>
                 </Grid>
             </Grid>}
-            <Modal open={flag} onClose={() => setFlag(false)} >
-                <Box>
-                    <ChangePasswordForm/>
-                </Box>
-            </Modal>
         </Box>
     )
 };

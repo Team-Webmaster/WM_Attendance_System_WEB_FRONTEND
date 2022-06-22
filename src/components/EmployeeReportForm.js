@@ -82,6 +82,7 @@ const EmployeeReportForm = (props) => {
                             name="employeeId"
                             value={employeeId}
                             onChange={(event) => setEmployeeId(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -105,6 +106,7 @@ const EmployeeReportForm = (props) => {
                             name="reportType"
                             value={reportType}
                             onChange={(event) => setReportType(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -141,6 +143,7 @@ const EmployeeReportForm = (props) => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
+                        required
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
                     <TextField
@@ -154,6 +157,7 @@ const EmployeeReportForm = (props) => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
+                        required
                     />
                 </Grid>
                 <Grid
