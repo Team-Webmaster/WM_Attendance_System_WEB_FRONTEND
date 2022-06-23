@@ -141,7 +141,7 @@ const Navigation = () => {
                                 <MenuItem key='Profile' onClick={() => navigate('/profile')}>
                                     <Typography textAlign="center">Profile</Typography>
                                 </MenuItem>
-                                {userData.type==0&&<MenuItem key='Dashboard' onClick={()=>navigate('/dashboard')}>
+                                {userData.type===0&&<MenuItem key='Dashboard' onClick={()=>navigate('/dashboard')}>
                                     <Typography textAlign="center">Dashboard</Typography>
                                 </MenuItem>}
                                 <MenuItem key='Log out' onClick={handleClickLogOut}>
