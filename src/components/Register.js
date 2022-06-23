@@ -9,26 +9,36 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Register = (props) => {
 
-  const fistNameRef = useRef('');
-  const lastNameRef = useRef('');
-  const emailRef = useRef('');
-  const passwordRef = useRef('');
-  const confirmPasswordRef = useRef('');
-  const nicRef = useRef('');
-  const telephoneRef = useRef('');
-  const addressNoRef = useRef('');
-  const addressStreetRef = useRef('');
-  const addreessCityRef = useRef('');
-  const addressProvinceRef = useRef('');
+  const provinceRef = useRef(); 
+  const [proImg,setProImg] = useState(null); 
+  const [proPicSrc,setProPicSrc] = useState(null); 
 
-  const [ proImg , setProImg ] = useState(null);
-  const [ proPicSrc, setProPicSrc ] = useState(null);
+  const [user,setUser] = useState({
+    firstName:'',
+    lastName:'',
+    email:'',
+    nic:'',
+    password:'',
+    confirmPassword:'',
+    telephone:'',
+    no:'',
+    street:'',
+    city:''
+  })
+
+
+  const handleChange = (event)=>{
+    setUser({
+      ...user,
+      [event.target.name]:event.target.value
+    });
+  }
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [isPasswordCorrect,setIsPasswordCorrect] = useState(true); 
-
+  const regex = new RegExp("/[0-9]{9}[a-z]/")
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   }
@@ -50,21 +60,21 @@ const Register = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if(passwordRef.current.value!==confirmPasswordRef.current.value){
+    if(user.password!==user.confirmPassword){
       setIsPasswordCorrect(false);
       return;
     }
     setIsPasswordCorrect(true);
     const formData = new FormData();
-    formData.append('name',fistNameRef.current.value + " " + lastNameRef.current.value);
-    formData.append('email', emailRef.current.value);
-    formData.append('password',passwordRef.current.value);
-    formData.append('nic',nicRef.current.value);
-    formData.append('telephone',telephoneRef.current.value);
-    formData.append('address',(addressNoRef.current.value ? addressNoRef.current.value + "," : "")
-        + (addressStreetRef.current.value ? addressStreetRef.current.value + "," : "")
-        + (addreessCityRef.current.value ? addreessCityRef.current.value + "," : "")
-        + (addressProvinceRef.current.value ? addressProvinceRef.current.value + "." : ""));
+    formData.append('name',user.firstName + " " + user.lastName);
+    formData.append('email',user.email);
+    formData.append('password',user.password);
+    formData.append('nic',user.nic);
+    formData.append('telephone',user.telephone);
+    formData.append('address',(user.no ? user.no + "," : "")
+        + (user.street ? user.street + "," : "")
+        + (user.city ? user.city + "," : "")
+        + (provinceRef.current.value ? provinceRef.current.value + "." : ""));
     formData.append('profilePicture', proImg);
     formData.append('type', 0);
     formData.append('noOfAnnualLeaves', 20);
@@ -116,13 +126,17 @@ const Register = (props) => {
             sm={6}
           >
             <TextField
+              error={user.firstName.length>20}
               id="outlined-firstName"
               label="First Name"
               size="small"
               type="text"
+              name='firstName'
+              helperText={user.firstName.length>20&&"You exceeded limit"}
+              value={user.firstName}
               fullWidth
               required
-              inputRef={fistNameRef}
+              onChange={handleChange}
             />
           </Grid>
           <Grid
@@ -137,7 +151,9 @@ const Register = (props) => {
               type="text"
               fullWidth
               required
-              inputRef={lastNameRef}
+              name='lastName'
+              onChange={handleChange}
+              value={user.lastName}
             />
           </Grid>
           <Grid
@@ -153,7 +169,9 @@ const Register = (props) => {
               helperText={props.emailErr}
               fullWidth
               required
-              inputRef={emailRef}
+              name='email'
+              onChange={handleChange}
+              value={user.email}
             />
           </Grid>
           <Grid
@@ -169,7 +187,9 @@ const Register = (props) => {
               size="small"
               fullWidth
               required
-              inputRef={passwordRef}
+              name='password'
+              onChange={handleChange}
+              value={user.password}
               InputProps={
                 {
                   endAdornment: (
@@ -200,7 +220,9 @@ const Register = (props) => {
               helperText={isPasswordCorrect?"":"Did not match with password"}
               fullWidth
               required
-              inputRef={confirmPasswordRef}
+              name='confirmPassword'
+              onChange={handleChange}
+              value={user.confirmPassword}
               InputProps={
                 {
                   endAdornment: (
@@ -223,13 +245,16 @@ const Register = (props) => {
             sm={6}
           >
             <TextField
+              error={user.nic.length==10}
               id="outlined-nic"
               label="NIC"
               type="text"
               size="small"
               fullWidth
               required
-              inputRef={nicRef}
+              name='nic'
+              onChange={handleChange}
+              value={user.nic}
             />
           </Grid>
           <Grid
@@ -244,7 +269,9 @@ const Register = (props) => {
               size="small"
               fullWidth
               required
-              inputRef={telephoneRef}
+              name='telephone'
+              onChange={handleChange}
+              value={user.telephone}
             />
           </Grid>
           <Grid
@@ -269,7 +296,9 @@ const Register = (props) => {
                 size="small"
                 fullWidth
                 required
-                inputRef={addressNoRef}
+                name='no'
+                onChange={handleChange}
+                value={user.no}
               />
             </Grid>
             <Grid
@@ -283,7 +312,9 @@ const Register = (props) => {
                 size="small"
                 fullWidth
                 required
-                inputRef={addressStreetRef}
+                name='street'
+                onChange={handleChange}
+                value={user.street}
               />
             </Grid>
             <Grid
@@ -297,7 +328,9 @@ const Register = (props) => {
                 size="small"
                 fullWidth
                 required
-                inputRef={addreessCityRef}
+                name='city'
+                onChange={handleChange}
+                value={user.city}
               />
             </Grid>
             <Grid
@@ -308,7 +341,9 @@ const Register = (props) => {
                 id="combo-box"
                 size="small"
                 options={provinceList}
-                renderInput={(params) => <TextField {...params} inputRef={addressProvinceRef} required label="Province" />}
+                renderInput={(params) => <TextField {...params} 
+                inputRef={provinceRef}
+                required label="Province" />}
               />
             </Grid>
           </Grid>

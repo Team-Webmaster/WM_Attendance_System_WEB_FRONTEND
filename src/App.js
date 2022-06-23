@@ -20,6 +20,7 @@ import { useContext, useEffect, useState } from 'react';
 import { UserContext } from './store/Context';
 import authService from './services/auth.service';
 
+
 const theme = createTheme({
   typography: {
     allVariants: {

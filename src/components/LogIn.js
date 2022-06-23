@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Typography, Grid, TextField, Button, InputAdornment, IconButton } from '@mui/material';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
@@ -7,9 +7,27 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const LogIn = (props) => {
-  const emailRef = useRef('');
-  const passwordRef = useRef('');
+  
   const [ showPassword, setShowPassword ] = useState(false);
+
+  const [user,setUser] = useState({
+    email:'',
+    password:''
+  })
+
+const changeHandler=(event)=>{
+
+  setUser({
+    ...user,
+    [event.target.name]:event.target.value
+  });
+
+
+}
+
+
+
+
 
   const handleClickShowPassword = ()=>{
     setShowPassword(!showPassword);
@@ -17,8 +35,8 @@ const LogIn = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     const loginData = {
-      email:emailRef.current.value,
-      password:passwordRef.current.value
+      email:user.email,
+      password:user.password
     }
     props.submitLoginHandler(loginData);
   }
@@ -64,10 +82,12 @@ const LogIn = (props) => {
               label="Email"
               type="email"
               size="small"
+              name="email"
               helperText={props.errState&&props.errMsg==="Email not found"?"*"+props.errMsg:null}
               fullWidth
               required
-              inputRef={emailRef}
+              
+              onChange={changeHandler}
             />
           </Grid>
           <Grid
@@ -80,10 +100,11 @@ const LogIn = (props) => {
               label="Password"
               type={showPassword?"text":"password"}
               size="small"
+              name="password"
               helperText={props.errState&&props.errMsg==="Password Incorrect"?"*"+props.errMsg:null}
               fullWidth
               required
-              inputRef={passwordRef}
+             
               InputProps={
                 {
                   endAdornment:(
@@ -98,6 +119,7 @@ const LogIn = (props) => {
                   )
                 }
               }
+              onChange={changeHandler}
             />
           </Grid>
           <Grid

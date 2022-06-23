@@ -14,6 +14,7 @@ const RegisterPage = () => {
 
     const registrationHandler = async (userData) => {
         const response = await authService.register(userData);
+        console.log(response);
         if(response.status===400){
             setEmailErrState(true);
             setEmailErr(response.data.message);
