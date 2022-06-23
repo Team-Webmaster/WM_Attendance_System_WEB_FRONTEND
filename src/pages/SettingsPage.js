@@ -1,12 +1,18 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { CircularProgress, Grid, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, Modal, Typography } from '@mui/material';
 import { UserContext } from '../store/Context';
+import SettingsCard from '../components/SettingsCard';
+import EditSettingsForm from '../components/EditSettingsForm';
+import useFetch from '../hooks/useFetch';
+import { ToastContainer } from 'react-toastify';
 
 const SettingsPage = () => {
 
+  const [flag,setFlag] = React.useState(false);
   const {userData} = React.useContext(UserContext);
+  const {data,reFetch} = useFetch('https://localhost:5001/api/Setting');
 
   if(!userData){
     return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center"}} >
@@ -17,6 +23,7 @@ const SettingsPage = () => {
   return (
     <React.Fragment>
        <Navigation/>
+       <ToastContainer/>
       <Grid container component="main" sx={{ height: "100vh", p: 5, mt:5 }}>
         <Grid
           item
@@ -43,7 +50,15 @@ const SettingsPage = () => {
         >
           <Typography variant='h4' sx={{fontWeight:"bold"}} >Settings</Typography>
           <Typography>The place edit settings...</Typography>
+          <Grid sx={{ justifyContent: 'center', display: 'flex' }} >
+            <SettingsCard data={data} onClickUpdate={() => setFlag(true)} />
+          </Grid>
         </Grid>
+        <Modal open={flag} onClose={() => setFlag(false)} >
+          <Box>
+            <EditSettingsForm data={data} reFetch={reFetch} closeSettingsForm={() => setFlag(false)} />
+          </Box>
+        </Modal>
       </Grid>
       <Footer/>
     </React.Fragment>

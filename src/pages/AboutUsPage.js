@@ -34,8 +34,7 @@ const AboutUsPage = () => {
           >
             <Typography variant='h4' sx={{ fontWeight: "bold" }} >About Us</Typography>
             <Typography >Who We Are... Why We Are...</Typography>
-            <br></br><br></br>
-            <Box>
+            <Box mt={2} >
               <Grid>
                 <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto", opacity: '100%' }}>
                   <CardContent>

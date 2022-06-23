@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography, Switch } from '@mui/material';
+import { Stack, Typography, Switch } from '@mui/material';
 import { UserContext } from '../store/Context';
 import { DataGrid } from '@mui/x-data-grid';
 
@@ -32,7 +32,6 @@ const PendingRecordsTable = (props) => {
 
     const { userData } = React.useContext(UserContext);
     const [toggleTable, setToggleTable] = React.useState(true);
-    console.log(props.pendingDetails.pendingShortLeaves);
 
     return (
         <div style={{ height: 400, width: '100%', ...style }} >
