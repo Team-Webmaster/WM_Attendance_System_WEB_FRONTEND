@@ -1,26 +1,20 @@
 import React from 'react';
-import { Badge, Box, Button, Fade, Grid, Modal, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography } from '@mui/material';
+import { Badge, Box, Button, Fade, Grid, Modal, Stack, Typography } from '@mui/material';
 import CircularProgressWithLabel from './CircularProgressWithLabel';
 import { UserContext } from '../store/Context';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import InfoIcon from '@mui/icons-material/Info';
 import PendingTwoToneIcon from '@mui/icons-material/PendingTwoTone';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 700,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
+import useFetch from '../hooks/useFetch';
+import RecentRecordsTable from './RecentRecordsTable';
+import PendingRecordsTable from './PendingRecordsTable';
+import LoadingSkeletons from './LoadingSkeletons';
 
 const LeaveDetails = () => {
 
+    const { data: pendingDetails } = useFetch('https://localhost:5001/api/Request/pending-leave-requests');
     const { userData } = React.useContext(UserContext);
+    const { data: leaveDetails } = useFetch(`https://localhost:5001/api/LeaveDetail/userId?userId=${userData.userId}`);
     const [openModalRecent, setOpenModalRecent] = React.useState(false);
     const [openModalPending, setOpenModalPending] = React.useState(false);
     const [openModalInfo, setOpenModalInfo] = React.useState(false);
@@ -35,6 +29,10 @@ const LeaveDetails = () => {
 
     const infoButtonHandler = () => {
         setOpenModalInfo(true);
+    }
+
+    if (!pendingDetails || !leaveDetails ) {
+        return <LoadingSkeletons/>
     }
 
     return (
@@ -59,7 +57,7 @@ const LeaveDetails = () => {
             <Stack direction="column" spacing={2} mt={2} sx={{ width: 400 }} ml="20%" >
                 <Fade in={true} timeout={2000} >
                     <Button
-                        endIcon={<Badge badgeContent={4} color='error' ><ListAltIcon /></Badge>}
+                        endIcon={<Badge badgeContent={leaveDetails.slice(-5).length} color='error' ><ListAltIcon /></Badge>}
                         size="medium"
                         variant='outlined'
                         color='primary'
@@ -70,7 +68,7 @@ const LeaveDetails = () => {
                 </Fade>
                 <Fade in={true} timeout={4000} >
                     <Button
-                        endIcon={<Badge badgeContent={4} color='error' ><PendingTwoToneIcon /></Badge>}
+                        endIcon={<Badge badgeContent={pendingDetails.pendingLeaves.filter(leave=>leave.nic===userData.nic).length + pendingDetails.pendingShortLeaves.filter(leave=>leave.nic===userData.nic).length} color='error' ><PendingTwoToneIcon /></Badge>}
                         size="medium"
                         variant='outlined'
                         color='warning'
@@ -91,55 +89,18 @@ const LeaveDetails = () => {
                     </Button>
                 </Fade>
             </Stack>
-            <Modal open={openModalRecent} onClose={() => setOpenModalRecent(false)} >
-                <TableContainer component={Paper} sx={style} >
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell >Reason</TableCell>
-                                <TableCell >Duration</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow
-                                key={1}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    2022-06-20
-                                </TableCell>
-                                <TableCell >Sick Leave</TableCell>
-                                <TableCell >4 Hours</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            <Modal
+                open={openModalRecent}
+                onClose={() => setOpenModalRecent(false)}
+            >
+                <Box>
+                    <RecentRecordsTable leaveDetails={leaveDetails} />
+                </Box>
             </Modal>
             <Modal open={openModalPending} onClose={() => setOpenModalPending(false)} >
-                <TableContainer component={Paper} sx={style} >
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell >Reason</TableCell>
-                                <TableCell >Duration</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            <TableRow
-                                key={1}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    2022-06-20
-                                </TableCell>
-                                <TableCell >Sick Leave</TableCell>
-                                <TableCell >4 Hours</TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Box>
+                    <PendingRecordsTable pendingDetails={pendingDetails} />
+                </Box>
             </Modal>
             <Modal open={openModalInfo} onClose={() => setOpenModalInfo(false)} >
                 <h1>hi</h1>

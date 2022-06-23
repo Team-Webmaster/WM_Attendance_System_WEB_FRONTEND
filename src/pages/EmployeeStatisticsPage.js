@@ -1,11 +1,12 @@
 import React from 'react';
 import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
-import { CircularProgress, Grid, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, Typography } from '@mui/material';
+import SelfStatisticsForm from '../components/SelfStatisticsForm';
+import StatisticsCharts from '../components/StatisticsCharts';
 import { UserContext } from '../store/Context';
-import SendSMSForm from '../components/SendSMSForm';
 
-const SendNotificationPage = () => {
+const EmployeeStatisticsPage = () => {
 
   const {userData} = React.useContext(UserContext);
 
@@ -27,7 +28,7 @@ const SendNotificationPage = () => {
           lg={6}
           sx={{
 
-            backgroundImage: "url(" + process.env.PUBLIC_URL + "/images/4966443.jpg)",
+            backgroundImage: "url(" + process.env.PUBLIC_URL + "/images/4020769.jpg)",
             backgroundRepeat: 'no-repeat',
             backgroundSize: 'cover',
             backgroundPosition: 'center'
@@ -40,15 +41,19 @@ const SendNotificationPage = () => {
           sm={8}
           md={5}
           lg={6}
+          sx={{ textAlign: "left" }}
         >
-          <Typography variant='h4' sx={{fontWeight:"bold",textAlign: "left"}} >Notifications</Typography>
-          <Typography sx={{ textAlign: "left" }} >The place to send notifications...</Typography>
-          <SendSMSForm/>
+          <Typography variant='h4' sx={{fontWeight:"bold"}} >Statistics</Typography>
+          <Typography>The place to check your performance...</Typography>
         </Grid>
       </Grid>
+      <Box sx={{ width: '100%' }}>
+          <SelfStatisticsForm/>
+          <StatisticsCharts/>
+      </Box>
       <Footer/>
     </React.Fragment>
   )
 }
 
-export default SendNotificationPage;
+export default EmployeeStatisticsPage;

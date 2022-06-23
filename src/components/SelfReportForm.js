@@ -2,14 +2,29 @@ import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import { dayDifference } from '../functions/timeDifference';
+import { UserContext } from '../store/Context';
 
 const reportTypes = ['Performance Report', 'Attendee Report', 'Leave Master'];
 
-const SelfReportForm = () => {
+const SelfReportForm = (props) => {
 
     const [reportType, setReportType] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+    const { userData } = React.useContext(UserContext);
+
+    const submitHandler = (event) => {
+        event.preventDefault();
+        const reportData = {
+            uId: userData.userId,
+            requesterId: userData.userId,
+            startDate: startDate,
+            endDate: endDate,
+            type: reportType
+        }
+        console.log(reportData);
+        props.submitReportFormHandler(reportData);
+    };
 
     let completeMsg;
 
@@ -23,7 +38,7 @@ const SelfReportForm = () => {
         <Box
             id="reportsForm"
             component="form"
-            // onSubmit={submitHandler}
+            onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {
@@ -48,7 +63,7 @@ const SelfReportForm = () => {
                     <Typography
                         variant="h5"
                     >
-                        Self Reports
+                        {userData.type === 2 ? 'Reports' : 'Self Reports'}
                     </Typography>
                 </Grid>
                 <Grid
@@ -64,6 +79,7 @@ const SelfReportForm = () => {
                             name="reportType"
                             value={reportType}
                             onChange={(event) => setReportType(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -100,6 +116,7 @@ const SelfReportForm = () => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
+                        required
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
                     <TextField
@@ -113,6 +130,7 @@ const SelfReportForm = () => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
+                        required
                     />
                 </Grid>
                 <Grid

@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { dayDifference } from '../functions/timeDifference';
+import { UserContext } from '../store/Context';
 
 const chartTypes = ['Bar Chart', 'Pie Chart','Line Chart'];
 
@@ -10,6 +11,7 @@ const SelfStatisticsForm = () => {
     const [chartType, setChartType] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+    const {userData} = React.useContext(UserContext);
 
     let completeMsg;
 
@@ -48,7 +50,7 @@ const SelfStatisticsForm = () => {
                     <Typography
                         variant="h5"
                     >
-                        Self Statistics
+                        {userData.type===2?'Statistics':'Self Statistics'}
                     </Typography>
                 </Grid>
                 <Grid

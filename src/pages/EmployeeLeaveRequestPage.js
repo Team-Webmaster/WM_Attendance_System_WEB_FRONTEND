@@ -1,32 +1,20 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
-import { Grid, Tab, Tabs, Box, CircularProgress } from '@mui/material';
+import { Grid, Box, CircularProgress } from '@mui/material';
 import Footer from '../components/Footer';
 import LeaveRequestForm from '../components/LeaveRequestForm';
-import LeaveApproval from '../components/LeaveApproval';
-import TabPanel from '../components/TabPanel';
 import LeaveDetails from '../components/LeaveDetails';
 import { UserContext } from '../store/Context';
 import leaveService from '../services/leave.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
 
-const LeaveManagementPage = () => {
+const EmployeeLeaveRequestPage = () => {
 
-  const [value, setValue] = React.useState(0);
   const {userData} = React.useContext(UserContext);
   const [isLoading,setIsLoading] = React.useState(false);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
 
   const leaveRequestHandler = async (leaveDetails) => {
     setIsLoading(true);
@@ -88,22 +76,11 @@ const LeaveManagementPage = () => {
         </Grid>
       </Grid>
       <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-            <Tab label="Leave Request" sx={{ml:30}} {...a11yProps(0)} />
-            <Tab label="Leave Approve" {...a11yProps(1)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
           <LeaveRequestForm submitFormHandler={leaveRequestHandler} submitShortLeaveHandler={shortLeaveHandler} />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <LeaveApproval />
-        </TabPanel>
       </Box>
       <Footer />
     </React.Fragment>
   )
 }
 
-export default LeaveManagementPage;
+export default EmployeeLeaveRequestPage;

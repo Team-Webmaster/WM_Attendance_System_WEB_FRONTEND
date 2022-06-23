@@ -2,15 +2,32 @@ import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import SummarizeIcon from '@mui/icons-material/Summarize';
 import { dayDifference } from '../functions/timeDifference';
+import useFetch from '../hooks/useFetch';
+import { UserContext } from '../store/Context';
 
 const reportTypes = ['Performance Report', 'Attendee Report', 'Leave Master'];
 
-const EmployeeReportForm = () => {
+const EmployeeReportForm = (props) => {
 
+    const {data} = useFetch('https://localhost:5001/api/User');
     const [reportType, setReportType] = React.useState('');
     const [employeeId, setEmployeeId] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+    const {userData} = React.useContext(UserContext);
+
+    const submitHandler = (event)=>{
+        event.preventDefault();
+        const reportData = {
+            uId:employeeId,
+            requesterId:userData.userId,
+            startDate:startDate,
+            endDate:endDate,
+            type:reportType
+        }
+        console.log(reportData);
+        props.submitReportFormHandler(reportData);
+    };
 
     let completeMsg;
 
@@ -24,7 +41,7 @@ const EmployeeReportForm = () => {
         <Box
             id="reportsForm"
             component="form"
-            // onSubmit={submitHandler}
+            onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {
@@ -56,7 +73,7 @@ const EmployeeReportForm = () => {
                     item
                     xs={12}
                 >
-                    <FormControl variant="standard" fullWidth >
+                    {data&&<FormControl variant="standard" fullWidth >
                         <InputLabel id="demo-simple-select-standard-label">Select Employee</InputLabel>
                         <Select
                             labelId="demo-simple-select-standard-label"
@@ -65,15 +82,16 @@ const EmployeeReportForm = () => {
                             name="employeeId"
                             value={employeeId}
                             onChange={(event) => setEmployeeId(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
                             </MenuItem>
                             {
-                                reportTypes.map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
+                                data.map((employee) => <MenuItem key={employee.userId} value={employee.userId}>{employee.name}</MenuItem>)
                             }
                         </Select>
-                    </FormControl>
+                    </FormControl>}
                 </Grid>
                 <Grid
                     item
@@ -88,6 +106,7 @@ const EmployeeReportForm = () => {
                             name="reportType"
                             value={reportType}
                             onChange={(event) => setReportType(event.target.value)}
+                            required
                         >
                             <MenuItem value="">
                                 <em>None</em>
@@ -124,6 +143,7 @@ const EmployeeReportForm = () => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setStartDate(event.target.value)}
                         fullWidth
+                        required
                     />
                     <Typography sx={{ m: 1 }}> to </Typography>
                     <TextField
@@ -137,6 +157,7 @@ const EmployeeReportForm = () => {
                         inputProps={{ max: new Date().toISOString().slice(0, 10) }}
                         onChange={(event) => setEndDate(event.target.value)}
                         fullWidth
+                        required
                     />
                 </Grid>
                 <Grid

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Grid, Button, Typography, TextField, InputLabel, Select, MenuItem, FormControl } from '@mui/material';
+import { Box, Grid, Button, Typography, TextField, InputLabel, Select, MenuItem, FormControl, CircularProgress } from '@mui/material';
 import TimeToLeaveIcon from '@mui/icons-material/TimeToLeave';
 import { dayDifference, hourDifference, minuteDifference, numOfSundays } from '../functions/timeDifference';
 import { UserContext } from '../store/Context';
+import useFetch from '../hooks/useFetch';
 
-const leaveTypes = [{ id: 1, type: 'Sick Leave' }, { id: 2, type: 'Normal Leave' }, { id: 3, type: 'Day off' }];
 const durations = ['Few Hours', 'First Half', 'Second Half', 'Full Day', 'Multi Days'];
 
 const LeaveRequestForm = (props) => {
@@ -15,6 +15,7 @@ const LeaveRequestForm = (props) => {
     const [startTime, setStartTime] = React.useState('');
     const [endTime, setEndTime] = React.useState('');
     const {userData} = React.useContext(UserContext);
+    const {data: leaveTypes} = useFetch('https://localhost:5001/api/LeaveDetail/leave-types');
 
     React.useEffect(()=>{
         setStartDate('');
@@ -80,6 +81,10 @@ const LeaveRequestForm = (props) => {
         </Typography>
     } else {
         completeDetails = null;
+    }
+
+    if(!leaveTypes){
+        return <CircularProgress color="inherit" />
     }
 
     return (
