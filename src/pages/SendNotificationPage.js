@@ -4,6 +4,7 @@ import Navigation from '../components/Navigation';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { UserContext } from '../store/Context';
 import SendSMSForm from '../components/SendSMSForm';
+import { ToastContainer } from 'react-toastify';
 
 const SendNotificationPage = () => {
 
@@ -18,6 +19,7 @@ const SendNotificationPage = () => {
   return (
     <React.Fragment>
        <Navigation/>
+       <ToastContainer/>
       <Grid container component="main" sx={{ height: "100vh", p: 5, mt:5 }}>
         <Grid
           item

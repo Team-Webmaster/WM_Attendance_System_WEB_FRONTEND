@@ -23,8 +23,8 @@ const SendSMSForm = (props) => {
         });
         console.log(msgData);
           axios.post("https://meghaduta.dhahas.com/sms/sendSMS", msgData, {headers:{'Content-Type':'application/json'}})
-            .then(res=>toast.success('SMS notifications send success.') )
-            .catch(err=>toast.error('SMS notifications send failed.') );
+            .then(res=>toast.success('SMS notifications send success.'))
+            .catch(err=>toast.error('SMS notifications send failed.'));
     };
 
     console.log(selected);

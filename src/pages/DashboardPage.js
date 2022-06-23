@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import Navigation from '../components/Navigation';
-import { Button, Fade, Grid, Modal } from '@mui/material';
+import { Box, Button, Fade, Grid, Modal } from '@mui/material';
 import Footer from '../components/Footer';
 import ApprovePendingUser from '../components/ApprovePendingUser';
 import { ToastContainer } from 'react-toastify';
 
 const DashboardPage = () => {
 
-    const [flag,setFlag] = useState(false);
+    const [flag, setFlag] = useState(false);
 
     return (
         <div>
             <Navigation />
-            <ToastContainer/>
+            <ToastContainer />
             <Grid container component="main" sx={{ height: "90vh", p: 5, mt: 8 }}>
                 <Grid
                     item
@@ -38,20 +38,22 @@ const DashboardPage = () => {
                     sx={{ textAlign: "left" }}
                 >
                     <Grid sx={{ mt: "8%", ml: "50%" }}>
-                    <Fade in={true} timeout={2000} >
-                    <Button
-                        size="large"
-                        variant='outlined'
-                        color='secondary'
-                        onClick={()=>setFlag(true)}
-                    >
-                        Pending User Requests
-                    </Button>
-                </Fade>
+                        <Fade in={true} timeout={2000} >
+                            <Button
+                                size="large"
+                                variant='outlined'
+                                color='secondary'
+                                onClick={() => setFlag(true)}
+                            >
+                                Pending User Requests
+                            </Button>
+                        </Fade>
                     </Grid>
                 </Grid>
-                <Modal open={flag} onClose={()=>setFlag(false)} >
-                    <ApprovePendingUser/>
+                <Modal open={flag} onClose={() => setFlag(false)} >
+                    <Box>
+                        <ApprovePendingUser />
+                    </Box>
                 </Modal>
             </Grid>
             <Footer />
