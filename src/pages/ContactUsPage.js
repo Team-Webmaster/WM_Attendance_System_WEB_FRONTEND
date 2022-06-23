@@ -49,8 +49,7 @@ const ContactUsPage = () => {
           >
             <Typography variant='h4' sx={{ fontWeight: "bold" }} >Contact Us</Typography>
             <Typography>The Details of Reaching Us...</Typography>
-            <br></br><br></br>
-            <Box>
+            <Box mt={0.5} >
               <Grid>
                 <Card style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto", opacity: '90%' }}>
                   <CardContent>

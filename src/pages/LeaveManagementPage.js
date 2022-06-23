@@ -10,6 +10,7 @@ import { UserContext } from '../store/Context';
 import leaveService from '../services/leave.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EmergencyLeaveRequestForm from '../components/EmergencyLeaveRequestForm';
 
 function a11yProps(index) {
   return {
@@ -95,7 +96,7 @@ const LeaveManagementPage = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <LeaveRequestForm submitFormHandler={leaveRequestHandler} submitShortLeaveHandler={shortLeaveHandler} />
+          {userData.noOfAnnualLeaves===0?<EmergencyLeaveRequestForm/>:<LeaveRequestForm submitFormHandler={leaveRequestHandler} submitShortLeaveHandler={shortLeaveHandler} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
           <LeaveApproval />
