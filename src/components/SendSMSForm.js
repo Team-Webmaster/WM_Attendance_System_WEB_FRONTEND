@@ -4,6 +4,8 @@ import { MultiSelect } from 'react-multi-select-component';
 import SendIcon from '@mui/icons-material/Send';
 import { UserContext } from '../store/Context';
 import useFetch from '../hooks/useFetch';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 const SendSMSForm = (props) => {
 
@@ -15,14 +17,14 @@ const SendSMSForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
         const msgData = JSON.stringify({
-            senders: selected.map(user => `${user.value}`),
+            senders: selected.map(user => `${user.telephone}`),
             message: message,
-            apiKey: "62b362689360060033ac1459"
+            apiKey: "62b417dda5a3c40033eec39a"
         });
         console.log(msgData);
-        //   axios.post("https://meghaduta.dhahas.com/sms/sendSMS", msgData, {headers:{'Content-Type':'application/json'}})
-        //     .then(res=>console.log(res))
-        //     .catch(err=>console.log(err));
+          axios.post("https://meghaduta.dhahas.com/sms/sendSMS", msgData, {headers:{'Content-Type':'application/json'}})
+            .then(res=>toast.success('SMS notifications send success.') )
+            .catch(err=>toast.error('SMS notifications send failed.') );
     };
 
     console.log(selected);
@@ -81,7 +83,7 @@ const SendSMSForm = (props) => {
                 >
                     {data && <MultiSelect
                         options={data.map((user) => {
-                            return { label: user.name, value: user.telephone, userId: user.userId }
+                            return { label: user.name, value: user.userId, telephone: user.telephone }
                         }).filter(user => user.userId !== userData.userId)}
                         value={selected}
                         onChange={setSelected}

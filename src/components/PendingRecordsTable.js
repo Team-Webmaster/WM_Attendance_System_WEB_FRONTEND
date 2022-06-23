@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Stack, Typography, Switch } from '@mui/material';
+import { Stack, Typography, Switch } from '@mui/material';
 import { UserContext } from '../store/Context';
 import { DataGrid } from '@mui/x-data-grid';
 
