@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { UserContext } from '../store/Context';
+import SendSMSForm from '../components/SendSMSForm';
 
 const SendNotificationPage = () => {
 
@@ -39,10 +40,10 @@ const SendNotificationPage = () => {
           sm={8}
           md={5}
           lg={6}
-          sx={{ textAlign: "left" }}
         >
-          <Typography variant='h4' sx={{fontWeight:"bold"}} >Notifications</Typography>
-          <Typography>The place to send notifications...</Typography>
+          <Typography variant='h4' sx={{fontWeight:"bold",textAlign: "left"}} >Notifications</Typography>
+          <Typography sx={{ textAlign: "left" }} >The place to send notifications...</Typography>
+          <SendSMSForm/>
         </Grid>
       </Grid>
       <Footer/>

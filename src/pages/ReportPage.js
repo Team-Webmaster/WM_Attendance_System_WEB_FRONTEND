@@ -22,7 +22,6 @@ const generateReports = (reportData)=>{
     .then((res)=>{
       toast.success('Report generated successfully completed. Check your emails.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
     }).catch((err)=>{
-      console.log(err.response);
       toast.error('Report generate failed. Try again shortly.',{position:toast.POSITION.TOP_CENTER,autoClose:4000});
     })
 }

@@ -24,19 +24,19 @@ const ProfileCard = (props) => {
                 <Grid container spacing={2} mt={1} width={300} >
                     <Grid item xs={12} display="flex" >
                         <EmailIcon />
-                        <Typography ml={1} >{`${userData.email}`}</Typography>
+                        <Typography sx={{textAlign:'left'}} ml={1} >{`${userData.email}`}</Typography>
                     </Grid>
                     <Grid item xs={12} display="flex" >
                         <CreditCardIcon />
-                        <Typography ml={1} >{`${userData.nic}`}</Typography>
+                        <Typography sx={{textAlign:'left'}} ml={1} >{`${userData.nic}`}</Typography>
                     </Grid>
                     <Grid item xs={12} display="flex" >
                         <LocationOnIcon />
-                        <Typography ml={1} >{`${userData.address}`}</Typography>
+                        <Typography sx={{textAlign:'left'}} ml={1} >{`${userData.address}`}</Typography>
                     </Grid>
                     <Grid item xs={12} display="flex" >
                         <PhoneAndroidIcon />
-                        <Typography ml={1} >{`${userData.telephone}`}</Typography>
+                        <Typography sx={{textAlign:'left'}} ml={1} >{`${userData.telephone}`}</Typography>
                     </Grid>
                 </Grid>
                 <Grid item xs={12} sx={{ justifyContent: 'right', display: 'flex' }} >
