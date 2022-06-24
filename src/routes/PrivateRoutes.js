@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import AboutUsPage from '../pages/AboutUsPage';
 import CalendarPage from '../pages/CalendarPage';
 import ContactUsPage from '../pages/ContactUsPage';
@@ -16,6 +16,7 @@ import SettingsPage from '../pages/SettingsPage';
 import StatisticsPage from '../pages/StatisticsPage';
 import VideoConferencePage from '../pages/VideoConferencePage';
 import WorkingStatusBoardPage from '../pages/WorkingStatusBoardPage';
+import SendEmailPage from '../pages/SendEmailPage';
 
 const PrivateRoutes = (props) => {
 
@@ -29,6 +30,7 @@ const PrivateRoutes = (props) => {
         <Route path='/statistics' element={<StatisticsPage />} />
         <Route path='/working-status-board' element={<WorkingStatusBoardPage />} />
         <Route path='/send-notification' element={<SendNotificationPage />} />
+        <Route path='/send-email' element={<SendEmailPage />} />
         <Route path='/settings' element={<SettingsPage />} />
         <Route path='/dashboard' element={<DashboardPage />} />
       </React.Fragment>);
@@ -39,6 +41,7 @@ const PrivateRoutes = (props) => {
         <Route path='/statistics' element={<StatisticsPage />} />
         <Route path='/working-status-board' element={<WorkingStatusBoardPage />} />
         <Route path='/send-notification' element={<SendNotificationPage />} />
+        <Route path='/send-email' element={<SendEmailPage />} />
       </React.Fragment>);
     } else {
       setRoutes(<React.Fragment>

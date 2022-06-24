@@ -131,6 +131,7 @@ const EditProfileForm = (props) => {
                         onChange={handleChange}
                         fullWidth
                         required
+                        error={!(user.nic.length==10)}
                     />
                 </Grid>
                 <Grid
@@ -147,6 +148,7 @@ const EditProfileForm = (props) => {
                         onChange={handleChange}
                         fullWidth
                         required
+                        error={(user.telephone.length!==10)}
                     />
                 </Grid>
                 <Grid

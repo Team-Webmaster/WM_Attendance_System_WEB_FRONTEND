@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React,{useState,useContext} from 'react'
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
 import { MultiSelect } from 'react-multi-select-component';
 import SendIcon from '@mui/icons-material/Send';
@@ -6,8 +6,8 @@ import { UserContext } from '../store/Context';
 import useFetch from '../hooks/useFetch';
 import axios from 'axios';
 
-const SendSMSForm = (props) => {
 
+function SendEmailForm() {
     const { data } = useFetch('https://localhost:5001/api/User');
     const [selected, setSelected] = useState([]);
     const [message, setMessage] = useState('');
@@ -16,13 +16,14 @@ const SendSMSForm = (props) => {
     const submitHandler = (event) => {
         event.preventDefault();
         const msgData = JSON.stringify({
-            senders: selected.map(user => `${user.value}`),
-            message: message,
-            apiKey: "62b417dda5a3c40033eec39a"
+            toEmails: selected.map(user => `${user.email}`),
+            subject:'Subject',
+            body: message
+            
             
         });
         console.log(msgData);
-          axios.post("https://meghaduta.dhahas.com/sms/sendSMS", msgData, {headers:{'Content-Type':'application/json'}})
+          axios.post("https://localhost:5001/api/Email", msgData, {headers:{'Content-Type':'application/json'}})
             .then(res=>console.log(res))
             .catch(err=>console.log(err));
     };
@@ -58,7 +59,7 @@ const SendSMSForm = (props) => {
                     <Typography
                         variant="h5"
                     >
-                        SMS Notification
+                        Email Notification
                     </Typography>
                 </Grid>
                 <Grid
@@ -83,7 +84,7 @@ const SendSMSForm = (props) => {
                 >
                     {data && <MultiSelect
                         options={data.map((user) => {
-                            return { label: user.name, value: user.telephone, userId: user.userId }
+                            return { label: user.name, value: user.userId, email: user.email }
                         }).filter(user => user.userId !== userData.userId)}
                         value={selected}
                         onChange={setSelected}
@@ -98,7 +99,7 @@ const SendSMSForm = (props) => {
                         variant="contained"
                         disabled={!selected.length > 0}
                     >
-                        Send SMS
+                        Send Email
                     </Button>
                 </Grid>
             </Grid>
@@ -106,4 +107,4 @@ const SendSMSForm = (props) => {
     )
 }
 
-export default SendSMSForm;
+export default SendEmailForm;

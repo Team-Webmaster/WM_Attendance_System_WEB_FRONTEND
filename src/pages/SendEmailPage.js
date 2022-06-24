@@ -3,9 +3,9 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { UserContext } from '../store/Context';
-import SendSMSForm from '../components/SendSMSForm';
+import SendEmailForm from '../components/SendEmailForm';
 
-const SendNotificationPage = () => {
+const SendEmailPage = () => {
 
   const {userData} = React.useContext(UserContext);
 
@@ -43,7 +43,8 @@ const SendNotificationPage = () => {
         >
           <Typography variant='h4' sx={{fontWeight:"bold",textAlign: "left"}} >Notifications</Typography>
           <Typography sx={{ textAlign: "left" }} >The place to send notifications...</Typography>
-          <SendSMSForm/>
+          <SendEmailForm />
+        
           
           
         </Grid>
@@ -59,4 +60,4 @@ const SendNotificationPage = () => {
   )
 }
 
-export default SendNotificationPage;
+export default SendEmailPage;

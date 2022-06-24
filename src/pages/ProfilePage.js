@@ -53,7 +53,7 @@ const ProfilePage = () => {
           <Typography variant='h4' sx={{ fontWeight: "bold" }} >Profile</Typography>
           <Typography>The place to manage all of your details...</Typography>
           <Grid sx={{ justifyContent: 'center', display: 'flex' }} >
-            {userData.type===0&&<Button >Visit Profiles</Button>}
+            {/* {userData.type===0&&<Button >Visit Profiles</Button>} */}
             <ProfileCard onClickUpdate={() => setFlag1(true)} />
           </Grid>
         </Grid>

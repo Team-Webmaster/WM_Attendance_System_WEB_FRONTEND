@@ -15,9 +15,9 @@ import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { UserContext } from '../store/Context';
 
 const employeeMenuItems = ['Home', 'Leave Management', 'Report', 'Profile', 'Calendar', 'Statistics', 'Video Conference'];
-const managerMenuItems = ['Working Status Board', 'Send Notification'];
+const managerMenuItems = ['Working Status Board', 'Send Notification','Send Email'];
 const adminMenuItems = ['Settings'];
-const paths = ['/home', '/leave-management', '/report', '/profile', '/calendar', '/statistics', '/video-conference', '/working-status-board', '/send-notification', '/settings'];
+const paths = ['/home', '/leave-management', '/report', '/profile', '/calendar', '/statistics', '/video-conference', '/working-status-board', '/send-notification','/send-email' ,'/settings'];
 
 const SideMenu = (props) => {
 
@@ -58,7 +58,8 @@ const SideMenu = (props) => {
                                                     index === 6 ? <VideocamIcon /> :
                                                         index === 7 ? <ScreenSearchDesktopIcon /> :
                                                             index === 8 ? <SendIcon /> :
-                                                                index === 9 ? <SettingsIcon /> : null}
+                                                            index === 9 ? <SendIcon /> :
+                                                                index === 10 ? <SettingsIcon /> : null}
                         </ListItemIcon>
                         <ListItemText primary={text} />
                     </ListItem>

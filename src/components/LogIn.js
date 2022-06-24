@@ -7,31 +7,18 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const LogIn = (props) => {
-<<<<<<< HEAD
+
   
-  const [ showPassword, setShowPassword ] = useState(false);
-
-  const [user,setUser] = useState({
-    email:'',
-    password:''
-  })
-
-const changeHandler=(event)=>{
-
-  setUser({
-    ...user,
-    [event.target.name]:event.target.value
-  });
-
-
-}
+  
 
 
 
 
 
-  const handleClickShowPassword = ()=>{
-=======
+
+
+  
+
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -48,19 +35,18 @@ const changeHandler=(event)=>{
   }
 
   const handleClickShowPassword = () => {
->>>>>>> 4d24c4583a1d9dc247c279f98ec45cbf1f9c9931
+ 
     setShowPassword(!showPassword);
   }
   const submitHandler = (event) => {
     event.preventDefault();
     const loginData = {
-<<<<<<< HEAD
+ 
       email:user.email,
       password:user.password
-=======
-      email: user.email,
-      password: user.password
->>>>>>> 4d24c4583a1d9dc247c279f98ec45cbf1f9c9931
+
+      
+
     }
     props.submitLoginHandler(loginData);
   }
@@ -89,82 +75,13 @@ const changeHandler=(event)=>{
           item
           xs={12}
         >
-<<<<<<< HEAD
-          <Grid
-            item
-            xs={12}
-          >
-            <AccountCircleIcon color="primary" sx={{ fontSize: 60 }} />
-            <Typography
-              variant="h5"
-            >
-              Log In
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <TextField
-              error={props.errState&&props.errMsg==="Email not found"}
-              id="outlined-email"
-              label="Email"
-              type="email"
-              size="small"
-              name="email"
-              helperText={props.errState&&props.errMsg==="Email not found"?"*"+props.errMsg:null}
-              fullWidth
-              required
-              
-              onChange={changeHandler}
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <TextField
-              error={props.errState&&props.errMsg==="Password Incorrect"}
-              id="outlined-password"
-              label="Password"
-              type={showPassword?"text":"password"}
-              size="small"
-              name="password"
-              helperText={props.errState&&props.errMsg==="Password Incorrect"?"*"+props.errMsg:null}
-              fullWidth
-              required
-             
-              InputProps={
-                {
-                  endAdornment:(
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle-password"
-                        onClick={handleClickShowPassword}
-                      >
-                        {showPassword ? <VisibilityIcon/>:<VisibilityOffIcon/>}
-                      </IconButton>
-                    </InputAdornment>
-                  )
-                }
-              }
-              onChange={changeHandler}
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <Button size="large" type="submit" endIcon={<LoginIcon />} variant="contained">Log In</Button>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-          >
-            <Typography>Don't have account ?  <Button component={RouterLink} to='/register'>Register</Button></Typography>
-            <Button>Forgot Password</Button>
-          </Grid>
-=======
+
+          
+          
+        
+        
+          
+
           <AccountCircleIcon color="primary" sx={{ fontSize: 60 }} />
           <Typography
             variant="h5"
@@ -232,8 +149,8 @@ const changeHandler=(event)=>{
           xs={12}
         >
           <Typography>Don't have account ?  <Button component={RouterLink} to='/register'>Register</Button></Typography>
-          <Button>Forgot Password</Button>
->>>>>>> 4d24c4583a1d9dc247c279f98ec45cbf1f9c9931
+          <Button component={RouterLink} to='/er'>Forgot Password</Button>
+
         </Grid>
       </Grid>
     </Box>

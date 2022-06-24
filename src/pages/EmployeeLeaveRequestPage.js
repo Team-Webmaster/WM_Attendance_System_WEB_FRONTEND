@@ -8,6 +8,7 @@ import { UserContext } from '../store/Context';
 import leaveService from '../services/leave.service';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EmergencyLeaveRequestForm from '../components/EmergencyLeaveRequestForm';
 
 
 const EmployeeLeaveRequestPage = () => {
@@ -76,7 +77,7 @@ const EmployeeLeaveRequestPage = () => {
         </Grid>
       </Grid>
       <Box sx={{ width: '100%' }}>
-          <LeaveRequestForm submitFormHandler={leaveRequestHandler} submitShortLeaveHandler={shortLeaveHandler} />
+          {userData.noOfAnnualLeaves===0?<EmergencyLeaveRequestForm/>:<LeaveRequestForm submitFormHandler={leaveRequestHandler} submitShortLeaveHandler={shortLeaveHandler} />}
       </Box>
       <Footer />
     </React.Fragment>

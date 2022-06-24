@@ -4,13 +4,14 @@ import Clock from 'react-live-clock';
 import timeGreeting from 'greeting-time';
 import Navigation from '../components/Navigation';
 import Footer from '../components/Footer';
-import { UserContext } from '../store/Context';
+import {  UserContext } from '../store/Context';
 
 const HomePage = () => {
 
   const { userData } = useContext(UserContext);
   const date = new Date();
   const arr = date.toDateString().split(' ');
+
 
   if(!userData){
     return <Grid component="main" sx={{width:"100%",height:"100vh",textAlign:"center"}} >
