@@ -3,10 +3,11 @@ import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { dayDifference } from '../functions/timeDifference';
 import { UserContext } from '../store/Context';
+import axios from 'axios';
 
 const chartTypes = ['Bar Chart', 'Pie Chart','Line Chart'];
 
-const SelfStatisticsForm = () => {
+const SelfStatisticsForm = (props) => {
 
     const [chartType, setChartType] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
@@ -21,11 +22,24 @@ const SelfStatisticsForm = () => {
             <Typography color="green" >{`Generate ${chartType} for date range ${startDate} to ${endDate}`}</Typography>
     }
 
+    const submitHandler = ()=>{
+        const statsData = {
+            chartType:chartType,
+            startDate:startDate,
+            endDate:endDate,
+            uId:userData.userId
+        }
+        axios.post('https://localhost:5001/api/Statistics',statsData)
+            .then(res=>props.setStatsData(res.data))
+            .catch(err=>console.log(err));
+        props.setIsChart(true);
+    }
+
     return (
         <Box
             id="statisticsForm"
             component="form"
-            // onSubmit={submitHandler}
+            onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {

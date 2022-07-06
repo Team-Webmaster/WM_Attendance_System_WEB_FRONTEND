@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import React from 'react';
 import { generateBarChartModel } from '../functions/statisticsData';
 import BarChart from './BarChart';
@@ -21,8 +21,9 @@ const chartData = {
     ]
 }
 
-const StatisticsCharts = () => {
+const StatisticsCharts = (props) => {
   return (
+    <React.Fragment>
     <Grid sx={{display:'flex',maxWidth:700}}>
     <BarChart
         chartData={generateBarChartModel(20,15)}
@@ -33,6 +34,8 @@ const StatisticsCharts = () => {
         textTitle="Bar Chart"
     />
     </Grid>
+    <Button onClick={()=>props.setIsChart(false)} >Generate Again</Button>
+    </React.Fragment>
   )
 }
 
