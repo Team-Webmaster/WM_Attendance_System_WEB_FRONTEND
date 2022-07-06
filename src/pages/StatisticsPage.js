@@ -7,6 +7,8 @@ import TabPanel from '../components/TabPanel';
 import EmployeeStatisticsForm from '../components/EmployeeStatisticsForm';
 import StatisticsCharts from '../components/StatisticsCharts';
 import { UserContext } from '../store/Context';
+import axios from 'axios';
+import { dayDifference, numOfSundays } from '../functions/timeDifference';
 
 function a11yProps(index) {
   return {
@@ -20,9 +22,33 @@ const StatisticsPage = () => {
   const [value, setValue] = React.useState(0);
   const {userData} = React.useContext(UserContext);
   const [isChart,setIsChart] = React.useState(false);
+  const [isEmpChart,setIsEmpChart] = React.useState(false);
+  const [selfData,setSelfData] = React.useState(null);
+  const [empData,setEmpData] = React.useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const submitStatisticsHandler = (statsData)=>{
+
+    axios.post('https://localhost:5001/api/Statistics',statsData)
+      .then((res)=>{
+        if(statsData.uId===userData.userId){
+          setSelfData({...res.data,
+            type:statsData.chartType,
+            noOfDates:dayDifference(statsData.startDate,statsData.endDate,false)- numOfSundays(statsData.startDate,statsData.endDate) 
+          });
+          setIsChart(true);
+        }else{
+          setEmpData({...res.data,
+            type:statsData.chartType,
+            noOfDates:dayDifference(statsData.startDate,statsData.endDate,false)- numOfSundays(statsData.startDate,statsData.endDate) 
+          });
+          setIsEmpChart(true);
+        }
+      })
+      .catch((err)=>console.log(err));
   };
 
   if(!userData){
@@ -70,12 +96,12 @@ const StatisticsPage = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          {!isChart?<SelfStatisticsForm setIsChart={setIsChart} />:
-          <StatisticsCharts setIsChart={setIsChart} />}
+          {!isChart?<SelfStatisticsForm submitStatisticsHandler={submitStatisticsHandler} setIsChart={setIsChart} />:
+          <StatisticsCharts data={selfData} setIsChart={setIsChart} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
-        {!isChart?<EmployeeStatisticsForm setIsChart={setIsChart} />:
-          <StatisticsCharts setIsChart={setIsChart} />}
+        {!isEmpChart?<EmployeeStatisticsForm submitStatisticsHandler={submitStatisticsHandler} setIsChart={setIsEmpChart} />:
+          <StatisticsCharts data={empData} setIsChart={setIsEmpChart} />}
         </TabPanel>
       </Box>
       <Footer/>
