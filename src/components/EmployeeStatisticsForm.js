@@ -3,7 +3,8 @@ import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, 
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { dayDifference } from '../functions/timeDifference';
 import useFetch from '../hooks/useFetch';
-import axios from 'axios';
+import { useGridApiEventHandler } from '@mui/x-data-grid';
+import { UserContext } from '../store/Context';
 
 const chartTypes = ['Bar Chart', 'Pie Chart','Line Chart','Scatter Chart']
 
@@ -14,18 +15,17 @@ const EmployeeStatisticsForm = (props) => {
     const [employeeId, setEmployeeId] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+    const {userData} = React.useContext(UserContext);
 
-    const submitHandler = ()=>{
+    const submitHandler = (e)=>{
+        e.preventDefault();
         const statsData = {
             chartType:chartType,
             startDate:startDate,
             endDate:endDate,
             uId:employeeId
         }
-        axios.post('https://localhost:5001/api/Statistics',statsData)
-            .then(res=>props.setStatsData(res.data))
-            .catch(err=>console.log(err));
-        props.setIsChart(true);
+        props.submitStatisticsHandler(statsData);
     }
 
     let completeMsg;
@@ -87,7 +87,7 @@ const EmployeeStatisticsForm = (props) => {
                                 <em>None</em>
                             </MenuItem>
                             {
-                                data&&data.map((employee) => <MenuItem key={employee.userId} value={employee.userId}>{employee.name}</MenuItem>)
+                                data&&data.filter(employee=>employee.userId!==userData.userId).map((employee) => <MenuItem key={employee.userId} value={employee.userId}>{employee.name}</MenuItem>)
                             }
                         </Select>
                     </FormControl>
