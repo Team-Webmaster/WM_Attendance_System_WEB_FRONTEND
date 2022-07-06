@@ -49,22 +49,22 @@ const FAQPage = () => {
                         <Grid item width={600} sx={{boxShadow:3,p:1}} >
                             <Typography variant='h6' >What is WM Attendance System ?</Typography>
                             <Typography>This a place to manage all your attendance works and etc. There is so many modern technologies to track your employees...</Typography>
-                            <Link to='/what-is' >Read more...</Link>
+                            <Link to='/faqs' >Read more...</Link>
                         </Grid>
                         <Grid item width={600} sx={{boxShadow:3,p:1,mt:1}} >
                             <Typography variant='h6' >Why you should use WM Attendance System ?</Typography>
                             <Typography>In modern world you can't do all the recording systems manually. Instead of that you can use modern technologies to make your works more easier...</Typography>
-                            <Link to='/why' >Read more...</Link>
+                            <Link to='/faqs' >Read more...</Link>
                         </Grid>
                         <Grid item width={600} sx={{boxShadow:3,p:1,mt:1}} >
                             <Typography variant='h6' >How can i mark my attendance ?</Typography>
                             <Typography>You can mark your attendance through our mobile app. This will be happen using your face verification...</Typography>
-                            <Link to='/attendace-mark?' >Read more...</Link>
+                            <Link to='/faqs' >Read more...</Link>
                         </Grid>
                         <Grid item width={600} sx={{boxShadow:3,p:1,mt:1}} >
                             <Typography variant='h6' >How can i request leaves ?</Typography>
                             <Typography>You can request your leaves using leave management feature. You need to fill your leave request details and submit it to the administration approval...</Typography>
-                            <Link to='/leave-request?' >Read more...</Link>
+                            <Link to='/faqs' >Read more...</Link>
                         </Grid>
                         <Grid mt={1} >
                             <Button variant='contained' color='info' onClick={()=>navigate('/faqs')} >Read more FAQs</Button>
