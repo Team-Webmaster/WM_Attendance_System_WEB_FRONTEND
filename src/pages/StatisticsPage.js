@@ -19,6 +19,7 @@ const StatisticsPage = () => {
 
   const [value, setValue] = React.useState(0);
   const {userData} = React.useContext(UserContext);
+  const [isChart,setIsChart] = React.useState(false);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -69,11 +70,12 @@ const StatisticsPage = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          <SelfStatisticsForm/>
-          <StatisticsCharts/>
+          {!isChart?<SelfStatisticsForm setIsChart={setIsChart} />:
+          <StatisticsCharts setIsChart={setIsChart} />}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <EmployeeStatisticsForm/>
+        {!isChart?<EmployeeStatisticsForm setIsChart={setIsChart} />:
+          <StatisticsCharts setIsChart={setIsChart} />}
         </TabPanel>
       </Box>
       <Footer/>

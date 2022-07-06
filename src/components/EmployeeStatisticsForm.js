@@ -2,15 +2,31 @@ import React from 'react';
 import { Box, Button, Divider, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import { dayDifference } from '../functions/timeDifference';
+import useFetch from '../hooks/useFetch';
+import axios from 'axios';
 
 const chartTypes = ['Bar Chart', 'Pie Chart','Line Chart','Scatter Chart']
 
-const EmployeeStatisticsForm = () => {
+const EmployeeStatisticsForm = (props) => {
 
+    const {data} = useFetch('https://localhost:5001/api/User');
     const [chartType, setChartType] = React.useState('');
     const [employeeId, setEmployeeId] = React.useState('');
     const [startDate, setStartDate] = React.useState('');
     const [endDate, setEndDate] = React.useState('');
+
+    const submitHandler = ()=>{
+        const statsData = {
+            chartType:chartType,
+            startDate:startDate,
+            endDate:endDate,
+            uId:employeeId
+        }
+        axios.post('https://localhost:5001/api/Statistics',statsData)
+            .then(res=>props.setStatsData(res.data))
+            .catch(err=>console.log(err));
+        props.setIsChart(true);
+    }
 
     let completeMsg;
 
@@ -24,7 +40,7 @@ const EmployeeStatisticsForm = () => {
         <Box
             id="statisticsForm"
             component="form"
-            // onSubmit={submitHandler}
+            onSubmit={submitHandler}
             autoComplete="true"
             sx={
                 {
@@ -71,7 +87,7 @@ const EmployeeStatisticsForm = () => {
                                 <em>None</em>
                             </MenuItem>
                             {
-                                chartTypes.map((type, index) => <MenuItem key={index} value={type}>{type}</MenuItem>)
+                                data&&data.map((employee) => <MenuItem key={employee.userId} value={employee.userId}>{employee.name}</MenuItem>)
                             }
                         </Select>
                     </FormControl>

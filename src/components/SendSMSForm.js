@@ -7,7 +7,7 @@ import useFetch from '../hooks/useFetch';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
-const SendSMSForm = (props) => {
+const SendSMSForm = () => {
 
     const { data } = useFetch('https://localhost:5001/api/User');
     const [selected, setSelected] = useState([]);

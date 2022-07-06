@@ -8,6 +8,8 @@ import PrivateRoutes from './routes/PrivateRoutes';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import LandingPage from './pages/LandingPage';
+import FAQPage from './pages/FAQPage';
+import FAQsPage from './pages/FAQsPage';
 
 const theme = createTheme({
   typography: {
@@ -56,6 +58,8 @@ function App() {
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/register' element={<RegisterPage />} />
+          <Route path='/faq' element={<FAQPage/>} />
+          <Route path='/faqs' element={<FAQsPage/>} />
         </Routes>
         {userData ? <PrivateRoutes userType={userData.type} /> :
           <Grid component="main" sx={{ width: "100%", height: "100vh", textAlign: "center" }} >

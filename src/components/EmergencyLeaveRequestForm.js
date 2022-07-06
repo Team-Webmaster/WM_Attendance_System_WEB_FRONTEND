@@ -2,18 +2,23 @@ import React from 'react';
 import { Box, Grid, Button, Typography, TextField } from '@mui/material';
 import AnnouncementIcon from '@mui/icons-material/Announcement';
 import { UserContext } from '../store/Context';
+import axios from 'axios';
 
 const EmergencyLeaveRequestForm = () => {
 
     const [reason,setReason] = React.useState('');
     const {userData} = React.useContext(UserContext);
 
-    const submitHandler = ()=>{
+    const submitHandler = (event)=>{
+        event.preventDefault();
         const emergencyDetails = {
             reason:reason,
-            uId:userData.userId
+            requesterId:userData.userId,
+            status:"Pending"
         }
-        console.log(emergencyDetails);
+        axios.post('https://localhost:5001/api/Request/emergency-leaves',emergencyDetails)
+            .then(res=>alert('Request success'))
+            .catch(err=>alert(err.response));
     }
 
   return (

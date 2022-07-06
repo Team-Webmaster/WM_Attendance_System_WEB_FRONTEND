@@ -3,26 +3,46 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { Box, Typography, Grid, TextField, Button, Card, CardContent } from '@mui/material';
 import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import { UserContext } from '../store/Context';
 
 const ContactUsPage = () => {
 
+  const [input, setInput] = React.useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    telephone: '',
+    message: ''
+  });
+  const {userData} = React.useContext(UserContext);
+
+  const handleChange = (event) => {
+    setInput({
+      ...input,
+      [event.target.name]: event.target.value
+    });
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const msgData = JSON.stringify({
-      senders: [ "+94704269753" ], 
-      message: 'Hi', 
-      apiKey: "62b362689360060033ac1459"
-    });
-    console.log(msgData);
-    axios.post("https://meghaduta.dhahas.com/sms/sendSMS", msgData, {headers:{'Content-Type':'application/json'}})
-      .then(res=>console.log(res))
-      .catch(err=>console.log(err));
+    const contactUsData = {
+      name:input.firstName+" "+input.lastName,
+      email:input.email,
+      telephone:input.telephone.toString(),
+      message:input.message,
+      uId:userData.userId
+    }
+    axios.post('https://localhost:5001/api/ContactUs',contactUsData)
+      .then(res=>toast.success('Your message send successfully.'))
+      .catch(err=>toast.error('Your message send failed.'));
   }
 
   return (
     <div>
       <React.Fragment>
         <Navigation />
+        <ToastContainer/>
         <Grid container component="main" sx={{ height: "100vh", p: 5, mt: 5 }}>
           <Grid
             item
@@ -60,22 +80,70 @@ const ContactUsPage = () => {
                     <form style={{ opacity: '100%' }} onSubmit={handleSubmit} >
                       <Grid container spacing={1}>
                         <Grid xs={12} sm={6} item>
-                          <TextField placeholder="Enter first name" label="First Name" variant="outlined" fullWidth required />
+                          <TextField
+                            placeholder="Enter first name"
+                            label="First Name"
+                            variant="outlined"
+                            name='firstName'
+                            fullWidth
+                            required
+                            onChange={handleChange}
+                          />
                         </Grid>
                         <Grid xs={12} sm={6} item>
-                          <TextField placeholder="Enter last name" label="Last Name" variant="outlined" fullWidth required />
+                          <TextField
+                            placeholder="Enter last name"
+                            label="Last Name"
+                            variant="outlined"
+                            fullWidth
+                            name='lastName'
+                            required
+                            onChange={handleChange}
+                          />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField type="email" placeholder="Enter email" label="Email" variant="outlined" fullWidth required />
+                          <TextField
+                            type="email"
+                            placeholder="Enter email"
+                            label="Email"
+                            variant="outlined"
+                            fullWidth
+                            name='email'
+                            required
+                            onChange={handleChange}
+                          />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField type="number" placeholder="Enter phone number" label="Phone" variant="outlined" fullWidth required />
+                          <TextField
+                            type="number"
+                            placeholder="Enter phone number"
+                            label="Phone" variant="outlined"
+                            fullWidth
+                            name='telephone'
+                            required
+                            onChange={handleChange}
+                          />
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField label="Message" multiline rows={4} placeholder="Type your message here" variant="outlined" fullWidth required />
+                          <TextField
+                            label="Message"
+                            multiline
+                            rows={4}
+                            placeholder="Type your message here"
+                            variant="outlined"
+                            fullWidth
+                            name='message'
+                            required
+                            onChange={handleChange}
+                          />
                         </Grid>
                         <Grid item xs={12}>
-                          <Button type="submit" variant="contained" color="primary" fullWidth>Submit</Button>
+                          <Button
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                          >Submit</Button>
                         </Grid>
 
                       </Grid>

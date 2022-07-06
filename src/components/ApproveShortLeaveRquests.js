@@ -3,6 +3,7 @@ import { Box, Divider, Stack, Typography } from '@mui/material';
 import ShortLeaveRequestCard from './ShortLeaveRequestCard';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
+import { toast } from 'react-toastify';
 
 const ApproveShortLeaveRquests = ({ pendingRequests, reFetch }) => {
 
@@ -11,10 +12,10 @@ const ApproveShortLeaveRquests = ({ pendingRequests, reFetch }) => {
   const approveShortLeaveRequest = (approveData) => {
     axios.post('https://localhost:5001/api/Request/approve-short-leave', approveData)
       .then((res) => {
-        console.log(res);
+        toast.success('Taken action successfully.');
         reFetch();
       }).catch((err) => {
-        console.log(err);
+        toast.error('Taken action failed.');
       })
   }
 

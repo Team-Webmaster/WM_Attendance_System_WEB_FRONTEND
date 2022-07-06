@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import Navigation from '../components/Navigation';
 import { CircularProgress, Grid, Typography } from '@mui/material';
 import { UserContext } from '../store/Context';
+import WorkingStatusBoard from '../components/WorkingStatusBoard';
 
 const WorkingStatusBoardPage = () => {
 
@@ -43,6 +44,17 @@ const WorkingStatusBoardPage = () => {
         >
           <Typography variant='h4' sx={{fontWeight:"bold"}} >Working Status Board</Typography>
           <Typography>The place to check working statuses...</Typography>
+        </Grid>
+      </Grid>
+      <Grid container sx={{ p: 5, mt:5 }}>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          md={5}
+          lg={12}
+        >
+          <WorkingStatusBoard/>
         </Grid>
       </Grid>
       <Footer/>
