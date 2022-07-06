@@ -1,5 +1,7 @@
+import { Grid } from '@mui/material';
 import React from 'react';
-import ScatterChart from './ScatterChart';
+import { generateBarChartModel } from '../functions/statisticsData';
+import BarChart from './BarChart';
 
 const chartData = {
     labels: ['Red', 'Orange', 'Blue'],
@@ -21,10 +23,16 @@ const chartData = {
 
 const StatisticsCharts = () => {
   return (
-    <ScatterChart
-        chartData={chartData}
-        textTitle="Scatter Chart"
+    <Grid sx={{display:'flex',maxWidth:700}}>
+    <BarChart
+        chartData={generateBarChartModel(20,15)}
+        textTitle="Bar Chart"
     />
+    <BarChart
+        chartData={generateBarChartModel(20,15)}
+        textTitle="Bar Chart"
+    />
+    </Grid>
   )
 }
 

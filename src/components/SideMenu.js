@@ -7,6 +7,7 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import PhonePausedIcon from '@mui/icons-material/PhonePaused';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import { Avatar, Box, Divider, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import ScreenSearchDesktopIcon from '@mui/icons-material/ScreenSearchDesktop';
 import SendIcon from '@mui/icons-material/Send';
@@ -66,6 +67,10 @@ const SideMenu = (props) => {
                 <ListItem button key='Contact Us' component={RouterLink} to='/contact-us' selected={'/contact-us' === location.pathname} >
                     <ListItemIcon><PhonePausedIcon /></ListItemIcon>
                     <ListItemText primary='Contact Us' />
+                </ListItem>
+                <ListItem button key='FAQ' component={RouterLink} to='/faq' selected={'/faq' === location.pathname} >
+                    <ListItemIcon><LiveHelpIcon /></ListItemIcon>
+                    <ListItemText primary='FAQ' />
                 </ListItem>
             </List>
         </Box>

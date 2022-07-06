@@ -3,6 +3,7 @@ import { Box, Divider, Stack, Typography } from '@mui/material';
 import LeaveRequestCard from './LeaveRequestCard';
 import axios from 'axios';
 import { UserContext } from '../store/Context';
+import { toast } from 'react-toastify';
 
 const ApproveLeaveRequests = ({ pendingRequests, reFetch }) => {
 
@@ -12,10 +13,10 @@ const ApproveLeaveRequests = ({ pendingRequests, reFetch }) => {
         console.log(approveData)
         axios.post('https://localhost:5001/api/Request/approve-leave', approveData)
             .then((res) => {
-                console.log(res);
+                toast.success('Taken action successfully.');
                 reFetch();
             }).catch((err) => {
-                console.log(err);
+                toast.error('Taken action failed.');
             })
     }
 

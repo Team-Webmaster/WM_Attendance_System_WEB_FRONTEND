@@ -31,7 +31,7 @@ const LeaveDetails = () => {
         setOpenModalInfo(true);
     }
 
-    if (!pendingDetails || !leaveDetails ) {
+    if (!pendingDetails || !leaveDetails  ) {
         return <LoadingSkeletons/>
     }
 
